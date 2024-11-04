@@ -1,0 +1,198 @@
+$secondary-color: #f8e1f4; // Rosa pálido
+$text-color: #333;
+$white: #fff;
+$moradoInstitucional: rgb(103, 48, 63);
+$rosaInstitucional: rgb(242, 228, 233);
+$moradoInstitucionalal70: rgba(103, 48, 63, 0.7);
+$moradoInstitucionalal60: rgba(103, 48, 63, 0.6);
+
+// General styles
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  color: $text-color;
+}
+
+// Navbar styles
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $moradoInstitucionalal70;
+  padding: 1rem 2rem;
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+  color: $white;
+
+  .logo img {
+    height: 40px; // Ajusta el tamaño según sea necesario
+    width: auto;
+  }
+  
+
+  nav {
+    .offset {
+        box-shadow: 0.3em 0.3em 0 0 var(--color), inset 0.3em 0.3em 0 0 var(--color);
+      }
+      .offset:hover, .offset:focus {
+        box-shadow: 0 0 0 0 var(--hover), inset 6em 3.5em 0 0 var(--hover);
+      }
+
+      .offset {
+        --color: rgb(242, 228, 233);
+        --hover: rgb(103, 48, 63);
+      }
+      
+      button {
+        color: var(--color);
+        -webkit-transition: 0.25s;
+        transition: 0.25s;
+        background: none;
+        border: 2px solid;
+        font: inherit;
+        line-height: 1;
+        margin: 0.5em;
+        padding: 1em 2em;
+      }
+      button:hover, button:focus {
+        border-color: var(--hover);
+        color: #fff;
+      }
+    
+  }
+}
+
+// Hero section with background image
+.hero {
+  background-image: url('../../../assets/estetoscopio-manos-corazon-curitas.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  color: $white;
+
+  .overlay {
+    background-color: $moradoInstitucionalal60;
+    padding: 2rem;
+    text-align: center;
+    width: 100%;
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+.scroll-down {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    color: $moradoInstitucional; // Usa el color que prefieras
+    cursor: pointer;
+    animation: bounce 1.5s infinite;
+  }
+  
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translate(-50%, 0);
+    }
+    40% {
+      transform: translate(-50%, -10px);
+    }
+    60% {
+      transform: translate(-50%, -5px);
+    }
+  }
+
+  .info-section {
+    background-color: #f7f0f9; // Color de fondo suave para contraste
+    padding: 40px 20px;
+    color: $text-color;
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: left;
+    }
+    
+    h2 {
+      font-size: 2rem;
+      color: $moradoInstitucional; // Morado principal
+      margin-bottom: 20px;
+    }
+  
+    p {
+      margin-bottom: 15px;
+      line-height: 1.6;
+    }
+  
+    ul {
+      margin: 10px 0;
+      padding-left: 20px;
+      
+      li {
+        margin-bottom: 5px;
+        color: $moradoInstitucional; // Morado
+      }
+    }
+  }
+  
+
+// Plans section
+.plans {
+  padding: 3rem 1rem;
+  background-color: lighten($secondary-color, 10%);
+  text-align: center;
+
+  h2 {
+    color: $moradoInstitucional;
+    margin-bottom: 2rem;
+  }
+
+  .plan-card {
+    background-color: $white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin: 1rem 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
+    margin: 1rem auto;
+
+    h3 {
+      color: $moradoInstitucional;
+    }
+
+    p {
+      margin: 0.5rem 0;
+    }
+  }
+}
+
+// Footer styles
+.footer {
+  padding: 1.5rem;
+  background-color: $moradoInstitucional;
+  color: $white;
+  text-align: center;
+
+  p {
+    margin: 0.5rem 0;
+  }
+}

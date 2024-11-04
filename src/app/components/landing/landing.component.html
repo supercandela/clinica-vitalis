@@ -1,0 +1,63 @@
+<div class="navbar">
+    <a class="logo" href="#">
+        <img src="../../../assets/isologo-horizontal.png" alt="Clínica Vitalis Logo" />
+    </a>
+
+    <nav>
+        <!-- <a href="#">Iniciar Sesión</a>
+      <a href="#">Registrarse</a> -->
+        <button class="offset">Iniciar Sesión</button>
+        <button class="offset">Registrarse</button>
+    </nav>
+</div>
+
+<section class="hero">
+    <div class="overlay">
+        <h1>Bienvenidos a Clínica Vitalis</h1>
+        <p>Atención médica de calidad en cada especialidad</p>
+    </div>
+    <div class="scroll-down">
+        <span>&#x2193;</span> <!-- Símbolo de flecha hacia abajo -->
+    </div>
+</section>
+
+<section class="info-section">
+    <div class="container">
+        <h2>Sobre Clínica Vitalis</h2>
+        <p>
+            La Clínica Vitalis cuenta con 6 consultorios, dos laboratorios físicos en la clínica, y una sala de espera
+            general.
+        </p>
+        <p>
+            Está abierta al público de: lunes a viernes de 8:00 a 19:00, y los sábados de 8:00 a 14:00.
+        </p>
+        <p>
+            En ella trabajan profesionales de diversas especialidades, como:
+        </p>
+        <ul>
+            <li>Cardiología</li>
+            <li>Ginecología</li>
+            <li>Pediatría</li>
+            <li>Dermatología</li>
+            <li>Traumatología</li>
+            <li>Neurología</li>
+        </ul>
+        <p>
+            Recibiendo pacientes con turno para consulta o tratamiento.
+        </p>
+    </div>
+</section>
+
+
+<section id="plans" class="plans">
+    <h2>Nuestros Planes</h2>
+    <div class="plan-card" *ngFor="let plan of plans">
+        <h3>{{ plan.name }}</h3>
+        <p>{{ plan.description }}</p>
+        <p><strong>Consultar precio</strong></p>
+    </div>
+</section>
+
+<footer class="footer">
+    <p>© 2024 Clínica Vitalis. Todos los derechos reservados.</p>
+</footer>
