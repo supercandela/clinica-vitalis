@@ -1,0 +1,103 @@
+$moradoInstitucional: rgb(103, 48, 63);
+$rosaInstitucional: rgb(242, 228, 233);
+$moradoInstitucionalal70: rgba(103, 48, 63, 0.7);
+$moradoInstitucionalal60: rgba(103, 48, 63, 0.6);
+$secondary-color: #f8e1f4; // Rosa pálido
+$text-color: #333;
+$white: #fff;
+
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+    
+    button {
+        img {
+            width: 50px;
+            height: 50px;
+        }
+    }
+  }
+
+.fondo-seccion {
+    background-color: $moradoInstitucionalal70;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.cascading-right {
+    margin-right: -50px;
+    background-color: $rosaInstitucional;
+    color: $moradoInstitucional;
+    border-radius: 20px;
+}
+
+@media (max-width: 991.98px) {
+    .cascading-right {
+        margin-right: 0;
+    }
+}
+
+.boton-enviar {
+    background-color: $moradoInstitucional;
+    color: $rosaInstitucional;
+}
+
+.wrapper {
+	height: 30px;
+    margin-bottom: 80px;
+    display: flex;
+    justify-content: center;
+}
+.contenedor-check-tipo {
+    
+    input[type="checkbox"] {
+        position: relative;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        cursor: pointer;
+        height: 5.2em;
+        width: 18em;
+        background-color: gainsboro;
+        -webkit-transition: 0.3s;
+        -o-transition: 0.3s;
+        transition: 0.3s;
+    }
+    input[type="checkbox"]:before {
+        font-size: 1.5em;
+        content: "Paciente";
+        position: absolute;
+        width: 7em;
+        height: 2.5em;
+        background-color: $moradoInstitucional;
+        color: $rosaInstitucional;
+        top: 0.42em;
+        left: 0.42em;
+        -webkit-transition: 0.3s;
+        -o-transition: 0.3s;
+        transition: 0.3s;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+    
+    input[type="checkbox"]:checked:before {
+        content: "Especialista";
+        left: 4.1em;
+        color: $moradoInstitucional;
+        background-color: $rosaInstitucional
+    }
+}
+

@@ -1,0 +1,248 @@
+<!-- Back button -->
+<div class="back-button">
+    <button onclick="window.history.back()" class="btn btn-link">
+        <img src="../../../assets/atras.png" alt="flecha atrás">
+    </button>
+</div>
+
+<!-- Section: Design Block -->
+<section class="text-center text-lg-start fondo-seccion">
+    <!-- Jumbotron -->
+    <div class="container py-4">
+        <div class="row g-0 align-items-center">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <div class="card cascading-right bg-body-tertiary" style="
+              backdrop-filter: blur(30px);
+              ">
+                    <div class="card-body p-5 shadow-5 text-center">
+                        <h2 class="fw-bold mb-4">Registro de usuarios</h2>
+
+                        <div class="wrapper">
+                            <div class="box">
+                                <div class="contenedor-check-tipo"><input type="checkbox"
+                                        (change)="seleccionarTipo($event)" /></div>
+                            </div>
+                        </div>
+
+                        <form *ngIf="!isEspecialista" [formGroup]="registroPacienteForm" (ngSubmit)="registrarUsuario()">
+
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <div data-mdb-input-init class="form-outline">
+                                        <input type="text" id="nombre" class="form-control" formControlName="nombre" />
+                                        <label class="form-label" for="nombre">Nombre</label>
+                                        <div *ngIf="registroPacienteForm.get('nombre')?.invalid && registroPacienteForm.get('nombre')?.touched">
+                                            El nombre es requerido y sólo puede estar compuesto por letras.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div data-mdb-input-init class="form-outline">
+                                        <input type="text" id="apellido" class="form-control"
+                                            formControlName="apellido" />
+                                        <label class="form-label" for="apellido">Apellido</label>
+                                        <div *ngIf="registroPacienteForm.get('apellido')?.invalid && registroPacienteForm.get('apellido')?.touched">
+                                            El apellido es requerido y sólo puede estar compuesto por letras.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <div data-mdb-input-init class="form-outline">
+                                        <input type="text" id="edad" class="form-control" formControlName="edad" />
+                                        <label class="form-label" for="edad">Edad</label>
+                                        <div *ngIf="registroPacienteForm.get('edad')?.invalid && registroPacienteForm.get('edad')?.touched">
+                                            La edad es requerida y sólo puede estar compuesta por números.
+                                        </div>
+                                        <div *ngIf="registroPacienteForm.get('edad')?.errors?.['min']">Debe ser 0 o más.</div>
+                                        <div *ngIf="registroPacienteForm.get('edad')?.errors?.['max']">La edad debe ser menor de 99 años.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div data-mdb-input-init class="form-outline">
+                                        <input type="text" id="dni" class="form-control" formControlName="dni" />
+                                        <label class="form-label" for="dni">DNI</label>
+                                        <div *ngIf="registroPacienteForm.get('dni')?.invalid && registroPacienteForm.get('dni')?.touched">
+                                            El DNI es requerido.
+                                        </div>
+                                        <div *ngIf="registroPacienteForm.get('dni')?.errors?.['pattern']">Debe contener solo números y
+                                            no
+                                            más
+                                            de 10
+                                            dígitos.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div data-mdb-input-init class="form-outline mb-4">
+                                <input type="text" id="obraSocial" class="form-control" formControlName="obraSocial" />
+                                <label class="form-label" for="obraSocial">Obra Social</label>
+                                <div *ngIf="registroPacienteForm.get('obraSocial')?.invalid && registroPacienteForm.get('obraSocial')?.touched">
+                                    La obra social es requerida.
+                                </div>
+                                <div *ngIf="registroPacienteForm.get('obraSocial')?.errors?.['pattern']">Debe contener solo letras.</div>
+                            </div>
+
+                            <div data-mdb-input-init class="form-outline mb-4">
+                                <input type="email" id="email" class="form-control" formControlName="email" />
+                                <label class="form-label" for="email">Correo electrónico</label>
+                                <div *ngIf="registroPacienteForm.get('email')?.invalid && registroPacienteForm.get('email')?.touched">
+                                    El correo electrónico es requerido y debe tener un formato válido.
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <div data-mdb-input-init class="form-outline">
+                                        <input type="password" id="clave" class="form-control" formControlName="clave" />
+                                        <label class="form-label" for="clave">Contraseña</label>
+                                    </div>
+                                    <div *ngIf="registroPacienteForm.get('clave')?.invalid && registroPacienteForm.get('clave')?.touched">
+                                        La contraseña es requerida. Debe tener al menos mínimo {{pacienteClave?.getError('minlength').requiredLength}} caracteres caracteres.
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div data-mdb-input-init class="form-outline">
+                                        <input type="password" id="repiteClave" class="form-control" formControlName="repiteClave" />
+                                        <label class="form-label" for="repiteClave">Repite contraseña</label>
+                                        <div *ngIf="registroPacienteForm.get('clave')?.invalid && registroPacienteForm.get('clave')?.touched">
+                                            {{pacienteRepiteClave?.getError('noCoincide')}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <!-- Submit button -->
+                            <button type="submit" data-mdb-button-init data-mdb-ripple-init
+                                class="btn btn-block mb-4 boton-enviar">
+                                Crear usuario
+                            </button>
+
+                        </form>
+
+                        <form *ngIf="isEspecialista" [formGroup]="registroEspecialistaForm" (ngSubmit)="registrarUsuario()">
+
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <div data-mdb-input-init class="form-outline">
+                                        <input type="text" id="nombre" class="form-control" formControlName="nombre" />
+                                        <label class="form-label" for="nombre">Nombre</label>
+                                        <div *ngIf="registroEspecialistaForm.get('nombre')?.invalid && registroEspecialistaForm.get('nombre')?.touched">
+                                            El nombre es requerido y sólo puede estar compuesto por letras.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div data-mdb-input-init class="form-outline">
+                                        <input type="text" id="apellido" class="form-control"
+                                            formControlName="apellido" />
+                                        <label class="form-label" for="apellido">Apellido</label>
+                                        <div *ngIf="registroEspecialistaForm.get('apellido')?.invalid && registroEspecialistaForm.get('apellido')?.touched">
+                                            El apellido es requerido y sólo puede estar compuesto por letras.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <div data-mdb-input-init class="form-outline">
+                                        <input type="text" id="edad" class="form-control" formControlName="edad" />
+                                        <label class="form-label" for="edad">Edad</label>
+                                        <div *ngIf="registroEspecialistaForm.get('edad')?.invalid && registroEspecialistaForm.get('edad')?.touched">
+                                            La edad es requerida y sólo puede estar compuesta por números.
+                                        </div>
+                                        <div *ngIf="registroEspecialistaForm.get('edad')?.errors?.['min']">Debe ser 25 o más.</div>
+                                        <div *ngIf="registroEspecialistaForm.get('edad')?.errors?.['max']">La edad debe ser hasta 65 años.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div data-mdb-input-init class="form-outline">
+                                        <input type="text" id="dni" class="form-control" formControlName="dni" />
+                                        <label class="form-label" for="dni">DNI</label>
+                                    </div>
+                                    <div *ngIf="registroEspecialistaForm.get('dni')?.invalid && registroEspecialistaForm.get('dni')?.touched">
+                                        El DNI es requerido.
+                                    </div>
+                                    <div *ngIf="registroEspecialistaForm.get('dni')?.errors?.['pattern']">Debe contener solo números y
+                                        no
+                                        más
+                                        de 10
+                                        dígitos.</div>
+                                </div>
+                            </div>
+
+                            <!-- Listado de especialidades con checkboxes -->
+                            <div data-mdb-input-init class="form-outline mb-4">
+                                <h3>Selecciona Especialidades</h3>
+                                <div *ngFor="let especialidad of especialidades">
+                                    <label>
+                                        <input type="checkbox" [value]="especialidad"
+                                            (change)="onCheckboxChange($event)" formControlName="especialidades" />
+                                        {{ especialidad }}
+                                    </label>
+                                </div>
+
+                                <!-- Input para agregar nueva especialidad -->
+                                <div class="nueva-especialidad mt-3 form-outline mb-4" data-mdb-input-init>
+                                    <input type="text" [(ngModel)]="nuevaEspecialidad" formControlName="nuevaEspecialidad"
+                                        placeholder="Agregar otra especialidad" class="form-control" />
+                                    <button type="button" (click)="agregarEspecialidad()"
+                                        class="btn btn-primary mt-2">Añadir</button>
+                                </div>
+                            </div>
+
+                            <div data-mdb-input-init class="form-outline mb-4">
+                                <input type="email" id="email" class="form-control" formControlName="email" />
+                                <label class="form-label" for="email">Correo electrónico</label>
+                                <div *ngIf="registroEspecialistaForm.get('email')?.invalid && registroEspecialistaForm.get('email')?.touched">
+                                    El correo electrónico es requerido y debe tener un formato válido.
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <div data-mdb-input-init class="form-outline">
+                                        <input type="password" id="clave" class="form-control" formControlName="clave" />
+                                        <label class="form-label" for="clave">Contraseña</label>
+                                        <div *ngIf="registroEspecialistaForm.get('clave')?.invalid && registroEspecialistaForm.get('clave')?.touched">
+                                            La contraseña es requerida. Debe tener al menos mínimo {{pacienteClave?.getError('minlength').requiredLength}} caracteres caracteres.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div data-mdb-input-init class="form-outline">
+                                        <input type="password" id="repiteClave" class="form-control" formControlName="repiteClave" />
+                                        <label class="form-label" for="repiteClave">Repite contraseña</label>
+                                        <div *ngIf="registroEspecialistaForm.get('clave')?.invalid && registroEspecialistaForm.get('clave')?.touched">
+                                            {{pacienteRepiteClave?.getError('noCoincide')}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Submit button -->
+                            <button type="submit" data-mdb-button-init data-mdb-ripple-init
+                                class="btn btn-block mb-4 boton-enviar">
+                                Crear usuario
+                            </button>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <img src="../../../assets/doctor-holding-red-heart.jpg" class="w-100 rounded-4 shadow-4" alt="" />
+            </div>
+        </div>
+    </div>
+    <!-- Jumbotron -->
+</section>
+<!-- Section: Design Block -->
