@@ -50,8 +50,6 @@ export class RegistroPacienteComponent {
       email: new FormControl("", [Validators.email, Validators.required]),
       clave: new FormControl("", [Validators.minLength(8), Validators.required]),
       repiteClave: new FormControl("", [Validators.minLength(8), Validators.required]),
-      // imagenPacienteUno: new FormControl(null, [Validators.required]),
-      // imagenPacienteDos: new FormControl(null, [Validators.required]),
     }, confirmarClaveValidator());
   }
 
@@ -92,7 +90,7 @@ export class RegistroPacienteComponent {
         this.usuario.obraSocial = this.registroPacienteForm.get('obraSocial')?.value || '';
         this.usuario.especialidades = [];
         this.usuario.tipo = 'paciente';
-        this.usuario.verificado = false;
+        this.usuario.verificado = true;
         this.usuario.imagenUno = this.imagenSeleccionada1;
         this.usuario.imagenDos = this.imagenSeleccionada2;
 

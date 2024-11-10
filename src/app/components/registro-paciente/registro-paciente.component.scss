@@ -20,7 +20,6 @@ $white: #fff;
     }
 }
 
-
 .fondo-seccion {
     background-color: $moradoInstitucionalal70;
     height: 100vh;
@@ -41,78 +40,14 @@ $white: #fff;
     }
 }
 
+
+.form-control {
+    text-align: center;
+}
+
 .boton-enviar {
     background-color: $moradoInstitucional;
     color: $rosaInstitucional;
-}
-
-.wrapper {
-    height: 30px;
-    margin-bottom: 80px;
-    display: flex;
-    justify-content: center;
-}
-
-.contenedor-check-tipo {
-
-    input[type="checkbox"] {
-        position: relative;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        cursor: pointer;
-        height: 5.2em;
-        width: 18em;
-        background-color: gainsboro;
-        -webkit-transition: 0.3s;
-        -o-transition: 0.3s;
-        transition: 0.3s;
-    }
-
-    input[type="checkbox"]:before {
-        font-size: 1.5em;
-        content: "Paciente";
-        position: absolute;
-        width: 7em;
-        height: 2.5em;
-        background-color: $moradoInstitucional;
-        color: $rosaInstitucional;
-        top: 0.42em;
-        left: 0.42em;
-        -webkit-transition: 0.3s;
-        -o-transition: 0.3s;
-        transition: 0.3s;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        justify-content: center;
-        font-family: "Poppins", sans-serif;
-        font-weight: 600;
-        letter-spacing: 1px;
-    }
-
-    input[type="checkbox"]:checked:before {
-        content: "Especialista";
-        left: 4.1em;
-        color: $moradoInstitucional;
-        background-color: $rosaInstitucional
-    }
-}
-
-.listado-especialidades {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-}
-
-.anadir-especialidad {
-    background-color: $rosaInstitucional;
-    color: $moradoInstitucional;
 }
 
 input[type="file"] {

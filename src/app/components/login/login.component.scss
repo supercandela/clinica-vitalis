@@ -19,7 +19,6 @@ $white: #fff;
         }
     }
   }
-  
 
 .fondo-seccion {
     background-color: $moradoInstitucionalal70;
@@ -39,6 +38,10 @@ $white: #fff;
     .cascading-left {
         margin-left: 0;
     }
+}
+
+.form-control {
+    text-align: center;
 }
 
 .boton-enviar {
