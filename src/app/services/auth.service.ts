@@ -75,7 +75,23 @@ export class AuthService {
                       new Error('Por favor, verifica tu correo electrónico antes de continuar.')
                     );
                   } else if (doc.exists) {
-                    console.log('Datos del usuario:', doc.data());
+                    const usuarioData = doc.data() as Usuario; // Asigna los datos al objeto
+                    this.usuarioActual = {
+                      id: uid,
+                      nombre: usuarioData.nombre,
+                      apellido: usuarioData.apellido,
+                      dni: usuarioData.dni,
+                      edad: usuarioData.edad,
+                      especialidades: usuarioData.especialidades,
+                      imagenDos: usuarioData.imagenDos,
+                      imagenUno: usuarioData.imagenUno,
+                      obraSocial: usuarioData.obraSocial,
+                      tipo: usuarioData.tipo,
+                      verificado: usuarioData.verificado
+                    };
+                    if (!this.usuarioActual.verificado) {
+                      reject(new Error('Aún no has sido habilitado para operar.'));
+                    }
                     resolve(); // Inicio de sesión exitoso
                   }
                 },

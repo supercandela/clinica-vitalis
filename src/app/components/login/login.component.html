@@ -20,64 +20,40 @@
               ">
                     <div class="card-body p-5 shadow-5 text-center">
                         <h2 class="fw-bold mb-5">Ingreso de usuarios registrados</h2>
-                        <form [formGroup]="loginForm" (ngSubmit)="ingresarUsuario()">
+                        <form [formGroup]="loginForm">
 
                             <div data-mdb-input-init class="form-outline mb-4">
                                 <input type="email" id="email" class="form-control" formControlName="email" />
                                 <label class="form-label" for="email">Correo electrónico</label>
-                                <div
-                                *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
-                                El correo electrónico es requerido y debe tener un formato válido.
-                            </div>
+                                <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+                                    El correo electrónico es requerido y debe tener un formato válido.
+                                </div>
                             </div>
 
                             <div data-mdb-input-init class="form-outline mb-4">
-                                <input type="password" id="clave" class="form-control" formControlName="clave"/>
+                                <input type="password" id="clave" class="form-control" formControlName="clave" />
                                 <label class="form-label" for="clave">Contraseña</label>
-                                <div
-                                *ngIf="loginForm.get('clave')?.invalid && loginForm.get('clave')?.touched">
-                                La contraseña es requerida.
+                                <div *ngIf="loginForm.get('clave')?.invalid && loginForm.get('clave')?.touched">
+                                    La contraseña es requerida.
+                                </div>
                             </div>
-                            </div>
-
-                            <!-- Checkbox -->
-                            <!-- <div class="form-check d-flex justify-content-center mb-4">
-                                <input class="form-check-input me-2" type="checkbox" value="" id="form2Example33"
-                                    checked />
-                                <label class="form-check-label" for="form2Example33">
-                                    Subscribe to our newsletter
-                                </label>
-                            </div> -->
 
                             <!-- Submit button -->
                             <button type="submit" data-mdb-button-init data-mdb-ripple-init
-                                class="btn btn-block mb-4 boton-enviar">
+                                class="btn btn-block mb-4 boton-enviar" (click)="ingresarUsuario()">
                                 Ingresar
                             </button>
 
-                            <!-- Register buttons -->
-                            <!-- <div class="text-center">
-                                <p>O registrate con estos usuarios:</p>
-                                <button type="button" data-mdb-button-init data-mdb-ripple-init
-                                    class="btn btn-link btn-floating mx-1">
-                                    <i class="fab fa-facebook-f"></i>
-                                </button>
-
-                                <button type="button" data-mdb-button-init data-mdb-ripple-init
-                                    class="btn btn-link btn-floating mx-1">
-                                    <i class="fab fa-google"></i>
-                                </button>
-
-                                <button type="button" data-mdb-button-init data-mdb-ripple-init
-                                    class="btn btn-link btn-floating mx-1">
-                                    <i class="fab fa-twitter"></i>
-                                </button>
-
-                                <button type="button" data-mdb-button-init data-mdb-ripple-init
-                                    class="btn btn-link btn-floating mx-1">
-                                    <i class="fab fa-github"></i>
-                                </button>
-                            </div> -->
+                            <!-- Botones de inicio rápido -->
+                            <div class="botones-acceso-rapido">
+                                <div class="quick-login-buttons">
+                                    <button *ngFor="let user of quickLoginUsers" class="quick-login-button"
+                                    appExpandirBoton (click)="cargarForm(user.email, user.password)">
+                                        <img [src]="user.profileImage" alt="Imagen de perfil" class="profile-image" />
+                                        <span class="user-name">{{ user.name }}</span>
+                                    </button>
+                                </div>
+                            </div>
 
                         </form>
                     </div>

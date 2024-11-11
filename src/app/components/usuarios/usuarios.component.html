@@ -1,0 +1,50 @@
+<app-header></app-header>
+
+
+<section class="listado">
+    <h2>Listado de Usuarios</h2>
+
+    <div class="tabla-usuarios">
+        <table>
+            <thead>
+                <tr>
+                    <th>Apellido</th>
+                    <th>Nombre</th>
+                    <th>DNI</th>
+                    <th>Edad</th>
+                    <th>Tipo</th>
+                    <th>Obra Social</th>
+                    <th>Especialidades</th>
+                    <th>Foto 1</th>
+                    <th>Foto 2</th>
+                    <th>Verificado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let usuario of usuarios">
+                    <td>{{ usuario.apellido }}</td>
+                    <td>{{ usuario.nombre }}</td>
+                    <td>{{ usuario.dni }}</td>
+                    <td>{{ usuario.edad }}</td>
+                    <td>{{ usuario.tipo }}</td>
+                    <td>{{ usuario.obraSocial }}</td>
+                    <td>
+                        <ul>
+                            <li *ngFor="let especialidad of usuario.especialidades">
+                                {{ especialidad }}
+                            </li>
+                        </ul>
+                    </td>
+                    <td><img [src]="usuario.imagenUno" alt="Imagen 1 de {{ usuario.nombre }}" /></td>
+                    <td><img [src]="usuario.imagenDos" alt="Imagen 2 de {{ usuario.nombre }}" /></td>
+                    <td><label class="switch">
+                            <input type="checkbox" [checked]="usuario.verificado"
+                                (change)="toggleVerificado(usuario)" />
+                            <span class="slider round"></span>
+                        </label></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</section>
