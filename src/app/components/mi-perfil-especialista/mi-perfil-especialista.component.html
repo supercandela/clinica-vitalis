@@ -1,0 +1,98 @@
+<app-header-especialista></app-header-especialista>
+
+<section class="perfil">
+    <h2>Mi Perfil</h2>
+
+    <div class="user-card card">
+        <div class="card">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img *ngIf="usuario?.imagenUno" [src]="usuario?.imagenUno" alt="Imagen de usuario"
+                        class="img-fluid rounded-start">
+                </div>
+                <div class="col-md-8 data-perfil">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ usuario?.nombre }} {{ usuario?.apellido }}</h5>
+                        <p class="card-text">
+                            {{ usuario?.tipo | uppercase }}
+                        </p>
+                        <ul class="user-info list-unstyled">
+                            <li><strong>DNI:</strong> {{ usuario?.dni }}</li>
+                            <li><strong>Edad:</strong> {{ usuario?.edad }}</li>
+                            <li><strong>Especialidades:</strong> {{ usuario?.especialidades?.join(', ') || 'No especificadas' }}</li>
+                            <li><strong>Verificado:</strong> {{ usuario?.verificado ? 'Sí' : 'No' }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="horarios">
+    <h2>Mis Horarios</h2>
+
+    <div class="container my-4">
+        <div *ngFor="let horario of horarios; let i = index" class="row align-items-center mb-3">
+          <!-- Especialidad Dropdown -->
+          <div class="col-md-2">
+            <label>Especialidad</label>
+            <select class="form-select" [(ngModel)]="horario.especialidad">
+              <option *ngFor="let especialidad of usuario?.especialidades" [value]="especialidad">
+                {{ especialidad }}
+              </option>
+            </select>
+          </div>
+      
+          <!-- Duración Dropdown -->
+          <div class="col-md-2">
+            <label>Duración</label>
+            <select class="form-select" [(ngModel)]="horario.duracion" (change)="actualizarHorarios(i)">
+              <option [value]="30">30 minutos</option>
+              <option [value]="60">60 minutos</option>
+            </select>
+          </div>
+      
+          <!-- Día de la Semana Dropdown -->
+          <div class="col-md-2">
+            <label>Día</label>
+            <select class="form-select" [(ngModel)]="horario.dia">
+              <option *ngFor="let dia of diasSemana" [value]="dia">{{ dia }}</option>
+            </select>
+          </div>
+      
+          <!-- Hora de Inicio Dropdown -->
+          <div class="col-md-2">
+            <label>Hora de inicio</label>
+            <select class="form-select" [(ngModel)]="horario.horaInicio" (change)="actualizarHorasFin(i)">
+              <option *ngFor="let hora of horario.opcionesHoras" [value]="hora">
+                {{ hora }}
+              </option>
+            </select>
+          </div>
+      
+          <!-- Hora de Fin Dropdown -->
+          <div class="col-md-2">
+            <label>Hora de fin</label>
+            <select class="form-select" [(ngModel)]="horario.horaFin">
+              <option *ngFor="let hora of horario.opcionesHorasFin" [value]="hora">
+                {{ hora }}
+              </option>
+            </select>
+          </div>
+      
+          <!-- Botón para eliminar el renglón -->
+          <div class="col-md-2">
+            <button class="btn btn-danger mt-4" *ngIf="horarios.length > 1" (click)="eliminarRenglon(i)">
+              Eliminar
+            </button>
+          </div>
+        </div>
+      
+        <!-- Botón para agregar un nuevo renglón -->
+        <button class="btn btn-primary" (click)="agregarRenglon()">Agregar horario</button>
+      </div>
+      
+      
+
+</section>

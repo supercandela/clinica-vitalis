@@ -7,6 +7,7 @@ import { RegistroEspecialistaComponent } from './components/registro-especialist
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { RegistroAdminComponent } from './components/registro-admin/registro-admin.component';
 import { authGuard } from './guards/auth.guard';
+import { MiPerfilEspecialistaComponent } from './components/mi-perfil-especialista/mi-perfil-especialista.component';
 
 export const routes: Routes = [
   {
@@ -40,6 +41,12 @@ export const routes: Routes = [
     component: UsuariosComponent,
     canActivate: [authGuard],
     data: { role: 'admin' }
+  },
+  {
+    path: 'mi-perfil-especialista',
+    component: MiPerfilEspecialistaComponent,
+    canActivate: [authGuard],
+    data: { role: 'especialista' }
   },
   { path: '**', component: LandingComponent }
 ];

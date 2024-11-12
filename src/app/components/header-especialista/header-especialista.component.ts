@@ -5,13 +5,13 @@ import { CommonModule } from '@angular/common';
 import { Usuario } from '../../models/usuario.model';
 
 @Component({
-  selector: 'app-header',
+  selector: 'app-header-especialista',
   standalone: true,
   imports: [RouterOutlet, RouterLink, RouterLinkActive, CommonModule],
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  templateUrl: './header-especialista.component.html',
+  styleUrl: './header-especialista.component.scss'
 })
-export class HeaderComponent implements OnInit {
+export class HeaderEspecialistaComponent implements OnInit {
   usuario?: Usuario;
   
 

@@ -45,7 +45,7 @@ export class LoginComponent {
         if (this.authService.usuarioActual?.tipo === 'admin') {
           this.router.navigateByUrl('/usuarios');
         } else if (this.authService.usuarioActual?.tipo === 'especialista') {
-          this.router.navigateByUrl('/registro-especialista');
+          this.router.navigateByUrl('/mi-perfil-especialista');
         } else if (this.authService.usuarioActual?.tipo === 'paciente') {
           this.router.navigateByUrl('/registro-paciente');
         }
