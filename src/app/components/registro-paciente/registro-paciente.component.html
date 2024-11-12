@@ -125,29 +125,29 @@
                             <div class="row">
                                 <div class="col-md-6 mb-4">
                                     <div data-mdb-input-init class="form-outline">
-                                        <input type="file" id="imagenPacienteUno" (change)="onFileSelected($event, 1)" />
+                                        <input type="file" id="imagenPacienteUno"
+                                            (change)="onFileSelected($event, 1)" />
                                         <label for="imagenPacienteUno">Subir Imagen 1</label>
-                                        <div *ngIf="registroPacienteForm.get('imagenPacienteUno')?.hasError('required') && registroPacienteForm.get('imagenPacienteUno')?.touched" class="error-message">
-                                            La imagen es obligatoria para el registro
-                                          </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-4">
                                     <div data-mdb-input-init class="form-outline">
-                                        <input type="file" id="imagenPacienteDos" (change)="onFileSelected($event, 2)" />
+                                        <input type="file" id="imagenPacienteDos"
+                                            (change)="onFileSelected($event, 2)" />
                                         <label for="imagenPacienteDos">Subir Imagen 2</label>
-                                        <div *ngIf="registroPacienteForm.get('imagenPacienteDos')?.hasError('required') && registroPacienteForm.get('imagenPacienteDos')?.touched" class="error-message">
-                                            La imagen es obligatoria para el registro
-                                          </div>
                                     </div>
                                 </div>
                             </div>
 
-
+                            <div class="captcha">
+                                <re-captcha (resolved)="resolved($event)"
+                                    siteKey="6Leoo3sqAAAAAKN4otmOGsxBxjDPbUzXSxWyiNcQ"></re-captcha>
+                            </div>
 
                             <!-- Submit button -->
                             <button type="submit" data-mdb-button-init data-mdb-ripple-init
-                                class="btn btn-block mb-4 boton-enviar">
+                                class="btn btn-block mb-4 boton-enviar"
+                                [disabled]="!this.registroPacienteForm.valid || !captchaResponse || !imagenSeleccionada1 || !imagenSeleccionada2">
                                 Crear usuario
                             </button>
 

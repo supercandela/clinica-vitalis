@@ -48,9 +48,10 @@ $white: #fff;
 .boton-enviar {
     background-color: $moradoInstitucional;
     color: $rosaInstitucional;
+    margin-top: 1em;
 }
 
 input[type="file"] {
     display: block;
     margin-top: 1em;
-  }
+}

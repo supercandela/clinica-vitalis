@@ -9,7 +9,6 @@ export const environment = {
         appId: "1:859664901147:web:be9aa8fc998e46fe3684be"
     },
     supabase: {
-        apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndjdG1vaHViZXN2enZtZmdldGV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzExODYzNzcsImV4cCI6MjA0Njc2MjM3N30.Yadd22L_X9mVsUYqS3fe7iQPTMOdnhUBi1o0DjHEp5c"
+        apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndjdG1vaHViZXN2enZtZmdldGV3Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTczMTE4NjM3NywiZXhwIjoyMDQ2NzYyMzc3fQ.eZc5Dietg5x3GSliwyL8HLD-q5u0iO8K-e8AznBL2B8"
     }
   };
-  

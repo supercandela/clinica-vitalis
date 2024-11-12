@@ -140,9 +140,15 @@
                                 <label for="imagenEspecialistaUno">Subir Imagen</label>
                             </div>
 
+                            <div class="captcha">
+                                <re-captcha (resolved)="resolved($event)"
+                                    siteKey="6Leoo3sqAAAAAKN4otmOGsxBxjDPbUzXSxWyiNcQ"></re-captcha>
+                            </div>
+
                             <!-- Submit button -->
                             <button type="submit" data-mdb-button-init data-mdb-ripple-init
-                                class="btn btn-block mb-4 boton-enviar">
+                                class="btn btn-block mb-4 boton-enviar"
+                                [disabled]="!this.registroEspecialistaForm.valid || !captchaResponse || !imagenSeleccionada1">
                                 Crear usuario
                             </button>
 
