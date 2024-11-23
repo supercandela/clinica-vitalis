@@ -45,11 +45,11 @@ section {
 
         .card {
             border: none;
-            
+
             .imagen-perfil {
                 background: linear-gradient(90deg, rgba(242, 228, 233, 1) 50%, rgba(103, 48, 63, 0.6) 50%);
             }
-            
+
             .data-perfil {
                 background-color: $moradoInstitucionalal60;
                 display: flex;
@@ -106,5 +106,13 @@ section {
         letter-spacing: 0.3em;
     }
 
+    button {
+        img {
+            height: 35px;
+            width: auto;
+            position: relative;
+            top: -5px;
+        }
+    }
 
 }
