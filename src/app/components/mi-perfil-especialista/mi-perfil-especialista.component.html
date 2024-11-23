@@ -35,7 +35,7 @@
   <div class="container my-4">
     <div *ngFor="let horario of horarios; let i = index" class="row align-items-center justify-content-between mb-3">
       <!-- Especialidad Dropdown -->
-      <div class="col-md-2 offset-md-3">
+      <div class="col-md-2">
         <label>Especialidad</label>
         <select class="form-select" [(ngModel)]="horario.especialidad">
           <option *ngFor="let especialidad of usuario?.especialidades" [value]="especialidad">
@@ -90,9 +90,10 @@
     </div>
 
     <!-- Botón para agregar un nuevo renglón -->
-    <button class="btn btn-primary" (click)="agregarRenglon()">Agregar horario</button>
+    <button class="btn boton-agregar" (click)="agregarRenglon()">Agregar horario</button>
+
+    <!-- Botón para agregar un nuevo renglón -->
+    <button class="btn boton-guardar" (click)="guardarHorarios()">Guardar horarios</button>
   </div>
-
-
 
 </section>

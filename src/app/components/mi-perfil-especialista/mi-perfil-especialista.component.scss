@@ -39,9 +39,7 @@ section {
     .user-card {
         max-width: 850px;
         margin: 20px auto;
-        // border: 1px solid #e0e0e0;
         border-radius: 8px;
-        // box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
 
         .card {
             border: none;
@@ -106,6 +104,10 @@ section {
         letter-spacing: 0.3em;
     }
 
+    label {
+        font-size: 1.1em;
+    }
+
     button {
         img {
             height: 35px;
@@ -113,6 +115,28 @@ section {
             position: relative;
             top: -5px;
         }
+    }
+
+    button {
+        margin: 1em auto 0;
+    }
+
+    button.boton-agregar {
+        display: block;
+        background-color: $moradoInstitucionalal60;
+        color: $rosaInstitucional;
+        // margin-top: 1em;
+        padding: 10px;
+    }
+
+    button.boton-guardar {
+        display: block;
+        background-color: $moradoInstitucional;
+        color: $rosaInstitucional;
+        // margin-top: 1em;
+        padding: 10px;
+        font-size: 1.2em;
+        font-weight: 600;
     }
 
 }
