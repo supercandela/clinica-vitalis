@@ -31,13 +31,11 @@ $white: #fff;
   
   .role-button {
     width: 40%;
-    height: auto;
+    padding-top: 40%;
+    position: relative;
     border-radius: 20px;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    display: block;
     border: none;
     cursor: pointer;
     background-color: $rosaInstitucional;
@@ -50,14 +48,25 @@ $white: #fff;
     }
   
     img {
-      width: 100%;
-      height: auto;
-      margin-bottom: 10px;
+      position: absolute;
+      top: 5%;
+      left: 5%;
+      width: 90%;
+      height: 90%;
+      object-fit: cover;
     }
   
     .role-text {
+      position: absolute;
+      bottom: 5%;
+      left: 50%;
+      transform: translateX(-50%);
       font-size: 1.5em;
       font-weight: bold;
       color: $text-color;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.7);
+      padding: 5px 10px;
+      border-radius: 10px;
     }
   }
