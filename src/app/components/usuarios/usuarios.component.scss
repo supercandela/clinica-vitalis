@@ -9,12 +9,15 @@ $white: #fff;
 // Plans section
 .listado {
     padding: 3rem 1rem;
-    background-color: lighten($secondary-color, 10%);
+    background-color: $rosaInstitucional;
+    border-bottom: 3px dashed $moradoInstitucionalal70;
     text-align: center;
 
     h2 {
-        color: $moradoInstitucional;
-        margin-bottom: 2rem;
+      color: $moradoInstitucional;
+      margin-bottom: 2rem;
+      font-weight: 700;
+      letter-spacing: 0.3em;
     }
 
 
@@ -42,7 +45,7 @@ $white: #fff;
             }
 
             tr:nth-child(even) {
-                background-color: $rosaInstitucional;
+                background-color: white;
             }
 
             td img {

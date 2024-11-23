@@ -3,12 +3,12 @@
 <section class="perfil">
     <h2>Mi Perfil</h2>
 
-    <div class="user-card card">
+    <div class="user-card">
         <div class="card">
             <div class="row g-0">
-                <div class="col-md-4">
+                <div class="col-md-4 imagen-perfil">
                     <img *ngIf="usuario?.imagenUno" [src]="usuario?.imagenUno" alt="Imagen de usuario"
-                        class="img-fluid rounded-start">
+                        class="img-fluid rounded-circle">
                 </div>
                 <div class="col-md-8 data-perfil">
                     <div class="card-body">
@@ -33,9 +33,9 @@
     <h2>Mis Horarios</h2>
 
     <div class="container my-4">
-        <div *ngFor="let horario of horarios; let i = index" class="row align-items-center mb-3">
+        <div *ngFor="let horario of horarios; let i = index" class="row align-items-center justify-content-between mb-3">
           <!-- Especialidad Dropdown -->
-          <div class="col-md-2">
+          <div class="col-md-2 offset-md-3">
             <label>Especialidad</label>
             <select class="form-select" [(ngModel)]="horario.especialidad">
               <option *ngFor="let especialidad of usuario?.especialidades" [value]="especialidad">

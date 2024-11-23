@@ -18,77 +18,73 @@ body {
     color: $text-color;
 }
 
+section {
+    background-color: $rosaInstitucional;
+    border-bottom: 3px dashed $moradoInstitucionalal70;
+}
+
 
 .perfil {
     padding: 3rem 1rem;
-    background-color: lighten($secondary-color, 10%);
     text-align: center;
 
     h2 {
         color: $moradoInstitucional;
         margin-bottom: 2rem;
+        font-weight: 700;
+        letter-spacing: 0.3em;
     }
 
 
     .user-card {
-        max-width: 750px;
+        max-width: 850px;
         margin: 20px auto;
-        border: 1px solid #e0e0e0;
+        // border: 1px solid #e0e0e0;
         border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        background-color: $moradoInstitucionalal60;
+        // box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
 
-        .data-perfil {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .card-body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        .user-images {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 15px;
-
-            .user-image {
-                width: 80px;
-                height: 80px;
-                border-radius: 50%;
-                object-fit: cover;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                transition: transform 0.3s;
-
-                &:hover {
-                    transform: scale(1.05);
-                }
+        .card {
+            border: none;
+            
+            .imagen-perfil {
+                background: linear-gradient(90deg, rgba(242, 228, 233, 1) 50%, rgba(103, 48, 63, 0.6) 50%);
             }
-        }
+            
+            .data-perfil {
+                background-color: $moradoInstitucionalal60;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
 
-        .card-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: $moradoInstitucional;
-        }
+            .card-body {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
 
-        .card-subtitle {
-            font-size: 0.9rem;
-            color: #666;
-        }
+                .card-title {
+                    font-size: 2rem;
+                    font-weight: 800;
+                    color: white;
+                }
 
-        .user-info {
-            text-align: left;
-            font-size: 0.9rem;
-            color: #555;
+                .card-text {
+                    font-size: 1.1em;
+                    font-weight: 800;
+                    letter-spacing: 0.3em;
+                }
 
-            li {
-                margin: 5px 0;
+                .user-info {
+                    text-align: left;
+                    font-size: 1em;
+                    font-weight: 600;
+                    color: gainsboro;
+
+                    li {
+                        margin: 5px 0;
+                    }
+                }
             }
         }
     }
@@ -97,16 +93,18 @@ body {
 
 .horarios {
     padding: 3rem 1rem;
-    background-color: lighten($secondary-color, 10%);
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
 
     h2 {
         color: $moradoInstitucional;
         margin-bottom: 2rem;
+        font-weight: 700;
+        letter-spacing: 0.3em;
     }
-
-
-
 
 
 }
