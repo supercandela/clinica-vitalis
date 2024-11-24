@@ -46,7 +46,7 @@ export class MiPerfilEspecialistaComponent implements OnInit {
               dia: '',
               horaInicio: '',
               horaFin: '',
-              opcionesHoras: this.generarHoras(30),
+              opcionesHoras: this.generarHoras(30, this.diasSemana[0]),
               opcionesHorasFin: [],
             },
           ];
@@ -70,7 +70,7 @@ export class MiPerfilEspecialistaComponent implements OnInit {
       dia: '',
       horaInicio: '',
       horaFin: '',
-      opcionesHoras: this.generarHoras(30),
+      opcionesHoras: this.generarHoras(30, this.diasSemana[0]),
       opcionesHorasFin: [],
     });
   }
@@ -81,7 +81,7 @@ export class MiPerfilEspecialistaComponent implements OnInit {
 
   actualizarHorarios(index: number) {
     const duracion = this.horarios[index].duracion;
-    this.horarios[index].opcionesHoras = this.generarHoras(duracion);
+    this.horarios[index].opcionesHoras = this.generarHoras(duracion, this.horarios[index].dia);
     this.horarios[index].opcionesHorasFin = []; // Limpiar opciones de fin hasta seleccionar una hora de inicio
     this.horarios[index].horaInicio = '';
     this.horarios[index].horaFin = '';
@@ -90,43 +90,72 @@ export class MiPerfilEspecialistaComponent implements OnInit {
   actualizarHorasFin(index: number) {
     const duracion = this.horarios[index].duracion;
     const horaInicio = this.horarios[index].horaInicio;
+    const dia = this.horarios[index].dia;
     this.horarios[index].opcionesHorasFin = this.generarHorasFin(
       horaInicio,
-      duracion
+      duracion,
+      dia
     );
     this.horarios[index].horaFin = ''; // Resetear la hora de fin
   }
 
   // Método para generar las opciones de horas basado en la duración
-  generarHoras(duracion: number): string[] {
+  generarHoras(duracion: number, dia: string): string[] {
     const horas = [];
-    for (let hora = 8; hora < 19; hora++) {
-      horas.push(`${hora.toString().padStart(2, '0')}:00`);
-      if (duracion === 30 && hora < 18) {
-        horas.push(`${hora.toString().padStart(2, '0')}:30`);
+    if (dia === "Sábado") {
+      for (let hora = 8; hora < 14; hora++) {
+        horas.push(`${hora.toString().padStart(2, '0')}:00`);
+        if (duracion === 30 && hora < 18) {
+          horas.push(`${hora.toString().padStart(2, '0')}:30`);
+        }
+      }
+    } else {
+      for (let hora = 8; hora < 19; hora++) {
+        horas.push(`${hora.toString().padStart(2, '0')}:00`);
+        if (duracion === 30 && hora < 18) {
+          horas.push(`${hora.toString().padStart(2, '0')}:30`);
+        }
       }
     }
     return horas;
   }
 
-  generarHorasFin(horaInicio: string, duracion: number): string[] {
+  generarHorasFin(horaInicio: string, duracion: number, dia: string): string[] {
     const horas = [];
     let [hora, minuto] = horaInicio.split(':').map(Number);
 
-    while (hora < 19 || (hora === 18 && minuto === 0)) {
-      minuto += duracion;
-      if (minuto >= 60) {
-        minuto = 0;
-        hora++;
+    if (dia === "Sábado") {
+      while (hora < 14 || (hora === 13 && minuto === 0)) {
+        minuto += duracion;
+        if (minuto >= 60) {
+          minuto = 0;
+          hora++;
+        }
+        if (hora < 14) {
+          horas.push(
+            `${hora.toString().padStart(2, '0')}:${minuto
+              .toString()
+              .padStart(2, '0')}`
+          );
+        }
       }
-      if (hora < 19) {
-        horas.push(
-          `${hora.toString().padStart(2, '0')}:${minuto
-            .toString()
-            .padStart(2, '0')}`
-        );
+    } else {
+      while (hora < 19 || (hora === 18 && minuto === 0)) {
+        minuto += duracion;
+        if (minuto >= 60) {
+          minuto = 0;
+          hora++;
+        }
+        if (hora < 19) {
+          horas.push(
+            `${hora.toString().padStart(2, '0')}:${minuto
+              .toString()
+              .padStart(2, '0')}`
+          );
+        }
       }
     }
+
     return horas;
   }
 
@@ -138,8 +167,8 @@ export class MiPerfilEspecialistaComponent implements OnInit {
       dia: horario.dia,
       horaInicio: horario.horaInicio,
       horaFin: horario.horaFin,
-      opcionesHoras: this.generarHoras(horario.duracion),
-      opcionesHorasFin: this.generarHorasFin(horario.horaInicio, horario.duracion), // Puedes agregar lógica adicional para generar esto si es necesario
+      opcionesHoras: this.generarHoras(horario.duracion, horario.dia),
+      opcionesHorasFin: this.generarHorasFin(horario.horaInicio, horario.duracion, horario.dia),
     };
   }
 

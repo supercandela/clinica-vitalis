@@ -56,7 +56,7 @@
       <!-- Día de la Semana Dropdown -->
       <div class="col-md-2">
         <label>Día</label>
-        <select class="form-select" [(ngModel)]="horario.dia">
+        <select class="form-select" [(ngModel)]="horario.dia" (change)="actualizarHorarios(i)">
           <option *ngFor="let dia of diasSemana" [value]="dia">{{ dia }}</option>
         </select>
       </div>
