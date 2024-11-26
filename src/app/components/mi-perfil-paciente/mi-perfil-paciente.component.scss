@@ -1,0 +1,90 @@
+$moradoInstitucional: rgb(103, 48, 63);
+$rosaInstitucional: rgb(242, 228, 233);
+$moradoInstitucionalal70: rgba(103, 48, 63, 0.7);
+$moradoInstitucionalal60: rgba(103, 48, 63, 0.6);
+$secondary-color: #f8e1f4; // Rosa pálido
+$text-color: #333;
+$white: #fff;
+
+// General styles
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: $text-color;
+}
+
+section {
+    background-color: $rosaInstitucional;
+    border-bottom: 3px dashed $moradoInstitucionalal70;
+}
+
+
+.perfil {
+    padding: 3rem 1rem;
+    text-align: center;
+
+    h2 {
+        color: $moradoInstitucional;
+        margin-bottom: 2rem;
+        font-weight: 700;
+        letter-spacing: 0.3em;
+    }
+
+
+    .user-card {
+        max-width: 850px;
+        margin: 20px auto;
+        border-radius: 8px;
+
+        .card {
+            border: none;
+
+            .imagen-perfil {
+                background: linear-gradient(90deg, rgba(242, 228, 233, 1) 50%, rgba(103, 48, 63, 0.6) 50%);
+            }
+
+            .data-perfil {
+                background-color: $moradoInstitucionalal60;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .card-body {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+
+                .card-title {
+                    font-size: 2rem;
+                    font-weight: 800;
+                    color: white;
+                }
+
+                .card-text {
+                    font-size: 1.1em;
+                    font-weight: 800;
+                    letter-spacing: 0.3em;
+                }
+
+                .user-info {
+                    text-align: left;
+                    font-size: 1em;
+                    font-weight: 600;
+                    color: gainsboro;
+
+                    li {
+                        margin: 5px 0;
+                    }
+                }
+            }
+        }
+    }
+}
+

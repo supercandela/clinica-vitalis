@@ -47,7 +47,7 @@ export class LoginComponent {
         } else if (this.authService.usuarioActual?.tipo === 'especialista') {
           this.router.navigateByUrl('/mi-perfil-especialista');
         } else if (this.authService.usuarioActual?.tipo === 'paciente') {
-          this.router.navigateByUrl('/registro-paciente');
+          this.router.navigateByUrl('/mi-perfil-paciente');
         }
 
         console.log('Inicio de sesión exitoso.');

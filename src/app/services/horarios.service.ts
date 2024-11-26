@@ -1,4 +1,3 @@
-// especialidades.service.ts
 import { Injectable } from '@angular/core';
 
 // import {
@@ -11,10 +10,11 @@ import { Injectable } from '@angular/core';
 // } from '@angular/fire/firestore';
 
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { forkJoin, Observable, of } from 'rxjs';
+import { catchError, map, switchMap, take, tap } from 'rxjs/operators';
 
 import { Horario } from '../models/horario.model';
+import { UsuariosService } from './usuarios.service';
 
 @Injectable({
   providedIn: 'root',
@@ -22,9 +22,37 @@ import { Horario } from '../models/horario.model';
 export class HorariosService {
   private collectionName = 'horarios';
 
-  constructor(private firestore: AngularFirestore) {}
+  constructor(
+    private firestore: AngularFirestore,
+    private usuariosService: UsuariosService
+  ) {}
 
-  obtenerHorarios(idEspecialista: string): Observable<Horario[]> {
+  obtenerTodosLosHorarios(): Observable<any[]> {
+    return this.firestore
+      .collection<{ idEspecialista: string; horarios: Horario[] }>('horarios')
+      .valueChanges()
+      .pipe(
+        switchMap((registros) => {
+          const peticionesUsuarios = registros.map((registro) =>
+            this.usuariosService.obtenerUsuarioPorId(registro.idEspecialista).pipe(
+              take(1), // Forzar a que el observable se complete después del primer valor
+              map((usuario) => ({
+                ...registro,
+                usuario,
+              })),
+              catchError((error) => {
+                console.error(`Error obteniendo usuario para id ${registro.idEspecialista}:`, error);
+                return of({ ...registro, usuario: null });
+              })
+            )
+          );
+          return forkJoin(peticionesUsuarios);
+        })
+      );
+  }
+  
+
+  obtenerHorariosPorEspecialista(idEspecialista: string): Observable<Horario[]> {
     return this.firestore
       .collection(this.collectionName, (ref) =>
         ref.where('idEspecialista', '==', idEspecialista)

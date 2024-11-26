@@ -1,0 +1,29 @@
+<app-header-paciente></app-header-paciente>
+
+<section class="perfil">
+  <h2>Mi Perfil</h2>
+
+  <div class="user-card">
+    <div class="card">
+      <div class="row g-0">
+        <div class="col-md-4 imagen-perfil">
+          <img *ngIf="usuario?.imagenUno" [src]="usuario?.imagenUno" alt="Imagen de usuario"
+            class="img-fluid rounded-circle">
+        </div>
+        <div class="col-md-8 data-perfil">
+          <div class="card-body">
+            <h5 class="card-title">{{ usuario?.nombre }} {{ usuario?.apellido }}</h5>
+            <p class="card-text">
+              {{ usuario?.tipo | uppercase }}
+            </p>
+            <ul class="user-info list-unstyled">
+              <li><strong>DNI:</strong> {{ usuario?.dni }}</li>
+              <li><strong>Edad:</strong> {{ usuario?.edad }}</li>
+              <li><strong>Obra Social:</strong> {{ usuario?.obraSocial }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

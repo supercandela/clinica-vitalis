@@ -1,0 +1,76 @@
+<app-header-paciente></app-header-paciente>
+
+<section class="solicitar-turno">
+    <h2>Solicitar turno</h2>
+
+</section>
+
+<section class="solicitar-turno">
+    <h2>Profesionales</h2>
+
+    <div class="profesionales-container">
+
+        <div
+            *ngFor="let profesional of horarios"
+            class="profesional-card"
+        >
+            <span class="profesional-nombre">Dr. {{ profesional.usuario.apellido }}, {{ profesional.usuario.nombre }}</span>
+            <button 
+                (click)="seleccionarProfesional(profesional.usuario.id)">
+                <img 
+                [src]="profesional.usuario.imagenUno" 
+                [alt]="profesional.usuario.apellido" 
+                class="profesional-imagen" />
+            </button>
+        </div>
+    </div>
+          
+</section>
+
+<section *ngIf="profesionalElegido" class="solicitar-turno">
+    <h2>Especialidades</h2>
+
+    <div class="especialidades-container">
+
+        <div
+            *ngFor="let especialidad of profesionalElegido[0].usuario.especialidades"
+            class="especialidad-card"
+        >
+            <span class="especialidad-nombre">{{especialidad}}</span>
+            <button 
+                (click)="seleccionarEspecialidad(especialidad)">
+                <img 
+                [src]="obtenerImagenEspecialidad(especialidad)" 
+                [alt]="especialidad" 
+                class="especialidad-imagen" />
+            </button>
+        </div>
+    </div>
+          
+</section>
+
+<section *ngIf="horariosFiltrados" class="solicitar-turno">
+    <h2>Próximas fechas</h2>
+
+    <div class="fechas-container">
+        <div *ngFor="let fecha of proximasFechasDeAtencion" class="fecha-card">
+            <button (click)="seleccionarFecha(fecha)">
+                <span class="fecha-nombre">{{ fecha }}</span>
+            </button>
+        </div>
+    </div>
+
+</section>
+
+<section *ngIf="fechaSeleccionada" class="solicitar-turno">
+    <h2>Horarios disponibles</h2>
+
+    <div class="horarios-container">
+        <div *ngFor="let turno of turnosAMostrar" class="horarios-card">
+            <button (click)="seleccionarTurno(turno)">
+                <span class="horarios-nombre">{{ turno }}</span>
+            </button>
+        </div>
+    </div>
+
+</section>

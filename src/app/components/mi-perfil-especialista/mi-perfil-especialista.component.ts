@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HeaderEspecialistaComponent } from '../header-especialista/header-especialista.component';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 
 import { Horario } from '../../models/horario.model';
 import { HorariosService } from '../../services/horarios.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-mi-perfil-especialista',
@@ -15,7 +16,7 @@ import { HorariosService } from '../../services/horarios.service';
   templateUrl: './mi-perfil-especialista.component.html',
   styleUrl: './mi-perfil-especialista.component.scss',
 })
-export class MiPerfilEspecialistaComponent implements OnInit {
+export class MiPerfilEspecialistaComponent implements OnInit, OnDestroy {
   usuario?: Usuario;
   diasSemana: string[] = [
     'Lunes',
@@ -27,6 +28,7 @@ export class MiPerfilEspecialistaComponent implements OnInit {
   ];
   // Lista inicial de horarios
   horarios: any[] = [];
+  subHorarios?: Subscription;
 
   constructor(
     private authService: AuthService,
@@ -36,7 +38,7 @@ export class MiPerfilEspecialistaComponent implements OnInit {
   ngOnInit(): void {
     this.usuario = this.authService.usuarioActual;
 
-    this.horariosService.obtenerHorarios(this.usuario.id).subscribe({
+    this.subHorarios = this.horariosService.obtenerHorariosPorEspecialista(this.usuario.id).subscribe({
       next: (horarios) => {
         if (horarios.length === 0) {
           this.horarios = [
@@ -187,5 +189,9 @@ export class MiPerfilEspecialistaComponent implements OnInit {
       this.transformarHorarioService(horario)
     );
     this.horariosService.guardarHorarios(this.authService.usuarioActual.id, horariosAGuardar);
+  }
+
+  ngOnDestroy(): void {
+    this.subHorarios?.unsubscribe();
   }
 }
