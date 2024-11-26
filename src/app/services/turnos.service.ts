@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { Firestore, collection, addDoc, collectionData, query, orderBy, where, getDocs} from '@angular/fire/firestore';
-import { Timestamp } from 'firebase/firestore';
+import { Firestore, collection, addDoc, collectionData, query, orderBy, where, getDocs, getDoc, doc} from '@angular/fire/firestore';
+import { CollectionReference, DocumentData, Timestamp, updateDoc } from 'firebase/firestore';
 
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Turno } from '../models/turno.model';
@@ -113,7 +113,7 @@ export class TurnosService {
 
   async obtenerTodosLosTurnos() {
     // Referencia a la colección "turnos"
-    const turnosRef = collection(this.firestore, 'turnos');
+    const turnosRef = collection(this.firestore, this.collectionName);
   
     try {
       // Obtener todos los documentos de la colección
@@ -132,4 +132,74 @@ export class TurnosService {
       return [];
     }
   }
+
+  async obtenerTurnosPorCampo(campoABuscar: string, valorABuscar: string): Promise<any[]> {
+    try {
+      // Referencia a la colección "turnos"
+      const turnosRef = collection(this.firestore, this.collectionName);
+  
+      // Crear una consulta con el campo y valor especificados
+      const q = query(turnosRef, where(campoABuscar, '==', valorABuscar));
+  
+      // Ejecutar la consulta
+      const querySnapshot = await getDocs(q);
+  
+      // Mapear los resultados a un array de objetos
+      const resultados = querySnapshot.docs.map(doc => ({
+        id: doc.id, // Incluye el ID del documento
+        ...doc.data() // Incluye el contenido del documento
+      }));
+  
+      return resultados;
+    } catch (error) {
+      console.error('Error al obtener los turnos:', error);
+      throw new Error('No se pudieron obtener los turnos.');
+    }
+  }
+
+  async agregarUsuarioATurnos(turnos: any[], campoUsuario: 'especialistaId' | 'pacienteId'): Promise<any[]> {
+    try {
+      // Crea un nuevo array de turnos con los datos del usuario agregados
+      const turnosConUsuarios = await Promise.all(
+        turnos.map(async (turno) => {
+          // Obtén el ID del usuario correspondiente
+          const usuarioId = turno[campoUsuario];
+  
+          if (!usuarioId) {
+            return { ...turno, usuario: null }; // Si no hay ID, agrega usuario como null
+          }
+  
+          // Busca el documento del usuario en Firestore
+          const usuarioRef = doc(collection(this.firestore, 'usuarios'), usuarioId);
+          const usuarioSnap = await getDoc(usuarioRef);
+  
+          // Si el usuario no existe, retorna el turno sin modificar
+          if (!usuarioSnap.exists()) {
+            return { ...turno, usuario: null };
+          }
+  
+          // Agrega los datos del usuario al turno
+          const usuarioData = usuarioSnap.data();
+          return { ...turno, usuario: { id: usuarioSnap.id, ...usuarioData } };
+        })
+      );
+  
+      return turnosConUsuarios;
+    } catch (error) {
+      console.error('Error al agregar usuarios a los turnos:', error);
+      throw new Error('No se pudieron agregar los usuarios a los turnos.');
+    }
+  }
+
+  async cambiarEstadoTurnoPorId (turnoId: string, nuevoEstado: string): Promise<void> {
+    try {
+      const turnoDocRef = doc(this.firestore, this.collectionName, turnoId);
+      await updateDoc(turnoDocRef, { estado: nuevoEstado });
+      console.log('Estado del turno actualizado con éxito');
+    } catch (error) {
+      console.error('Error al actualizar el estado del turno:', error);
+    }
+  }
 }
+
+

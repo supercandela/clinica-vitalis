@@ -1,0 +1,24 @@
+<app-header-especialista></app-header-especialista>
+
+<section class="listado">
+    <h2>Mis turnos</h2>
+
+    <!-- AGREGAR FILTRO -->
+
+    <div class="turnos">
+        <div class="card text-center" *ngFor="let turno of misTurnosConDatosPaciente">
+            <div class="card-header">{{ turno.especialidad }}</div>
+            <div class="card-body">
+              <h5 class="card-title">Paciente: {{turno.usuario.apellido + ', ' + turno.usuario.nombre}}</h5>
+              <p class="card-text">Fecha: {{ turno.fecha.toDate() | date: 'dd/MM/yyyy' }} - {{ turno.hora }}hs.</p>
+              <button *ngIf="turno.estado === 'Pendiente'" (click)="aceptarTurno(turno.id)">Aceptar</button>
+              <button *ngIf="turno.estado === 'Pendiente'" (click)="cancelarTurno(turno.id)">Cancelar</button>
+              <button *ngIf="turno.estado === 'Pendiente'">Rechazar</button>
+              <button *ngIf="turno.estado === 'Aceptado'">Finalizar</button>
+              <button *ngIf="turno.resena !== ''">Ver reseña</button>
+            </div>
+            <div class="card-footer text-muted">Estado: {{ turno.estado }}</div>
+        </div>
+    </div>
+
+</section>

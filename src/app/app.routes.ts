@@ -10,6 +10,8 @@ import { authGuard } from './guards/auth.guard';
 import { MiPerfilEspecialistaComponent } from './components/mi-perfil-especialista/mi-perfil-especialista.component';
 import { MiPerfilPacienteComponent } from './components/mi-perfil-paciente/mi-perfil-paciente.component';
 import { SolicitarTurnosComponent } from './components/solicitar-turnos/solicitar-turnos.component';
+import { MisTurnosPacienteComponent } from './components/mis-turnos-paciente/mis-turnos-paciente.component';
+import { MisTurnosEspecialistaComponent } from './components/mis-turnos-especialista/mis-turnos-especialista.component';
 
 export const routes: Routes = [
   {
@@ -61,6 +63,18 @@ export const routes: Routes = [
     component: SolicitarTurnosComponent,
     canActivate: [authGuard],
     data: { role: 'paciente' }
+  },
+  {
+    path: 'mis-turnos-paciente',
+    component: MisTurnosPacienteComponent,
+    canActivate: [authGuard],
+    data: { role: 'paciente' }
+  },
+  {
+    path: 'mis-turnos-especialista',
+    component: MisTurnosEspecialistaComponent,
+    canActivate: [authGuard],
+    data: { role: 'especialista' }
   },
   { path: '**', component: LandingComponent }
 ];
