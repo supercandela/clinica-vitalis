@@ -191,13 +191,14 @@ export class TurnosService {
     }
   }
 
-  async cambiarEstadoTurnoPorId (turnoId: string, nuevoEstado: string): Promise<void> {
+  async cambiarEstadoTurnoPorId (turnoId: string, nuevoEstado: string, comentarioCancelacion: string) {
+    let mensaje = '';
     try {
       const turnoDocRef = doc(this.firestore, this.collectionName, turnoId);
-      await updateDoc(turnoDocRef, { estado: nuevoEstado });
-      console.log('Estado del turno actualizado con éxito');
+      await updateDoc(turnoDocRef, { estado: nuevoEstado, comentarioCancelacion: comentarioCancelacion });
+      return 'Estado del turno actualizado con éxito';
     } catch (error) {
-      console.error('Error al actualizar el estado del turno:', error);
+      return error;
     }
   }
 }
