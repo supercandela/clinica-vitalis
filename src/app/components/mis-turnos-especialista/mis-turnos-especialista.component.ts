@@ -46,6 +46,7 @@ export class MisTurnosEspecialistaComponent implements OnInit, OnDestroy {
       });
 
     this.handleReject = this.handleReject.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
   }
 
   async aceptarTurno(turnoId: string) {

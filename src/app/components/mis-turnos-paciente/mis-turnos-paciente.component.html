@@ -14,8 +14,9 @@
                     turno.hora }}hs.</p>
                 <p class="card-text" *ngIf="turno.estado === 'Cancelado' || turno.estado === 'Rechazado'">
                     <strong>Comentario:</strong> {{ turno.comentarioCancelacion }}</p>
-                <button
-                    *ngIf="turno.estado !== 'Realizado' && turno.estado !== 'Rechazado' && turno.estado !== 'Cancelado'">Cancelar</button>
+                <button *ngIf="turno.estado !== 'Realizado' && turno.estado !== 'Rechazado' && turno.estado !== 'Cancelado'" [context]="turno.id" [onSave]="handleCancel"
+                    [modalMessage]="'Ingrese el motivo de la cancelación:'" appCancelModal>Cancelar</button>
+
                 <button *ngIf="turno.resena !== ''">Ver reseña</button>
                 <button *ngIf="turno.resena !== '' && turno.estado === 'Realizado'">Completar encuesta</button>
                 <button *ngIf="turno.estado === 'Realizado'">Calificar atención</button>
