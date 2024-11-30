@@ -6,7 +6,6 @@ $secondary-color: #f8e1f4; // Rosa pálido
 $text-color: #333;
 $white: #fff;
 
-// General styles
 * {
     margin: 0;
     padding: 0;
@@ -18,7 +17,6 @@ body {
     color: $text-color;
 }
 
-// Navbar styles
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -29,7 +27,7 @@ body {
     color: $white;
 
     .logo img {
-        height: 40px; // Ajusta el tamaño según sea necesario
+        height: 40px;
         width: auto;
         margin-right: 2em;
     }
@@ -82,5 +80,12 @@ body {
         color: #fff;
     }
 
+    button.cerrar-sesion {
+        border: none;
+    }
 
+    button.cerrar-sesion:hover {
+        background-color: $moradoInstitucional;
+        color: $rosaInstitucional;
+    }
 }

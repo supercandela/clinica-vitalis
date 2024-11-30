@@ -32,16 +32,13 @@
 
             </div>
 
-            <button class="btn btn-outline-danger text-nowrap" type="button" data-toggle="collapse" data-target="#paraCerrarSesion"
-                aria-expanded="false" aria-controls="paraCerrarSesion">
+            <button class="btn btn-outline-danger text-nowrap" type="button">
                 Bienvenidx, {{ usuario?.nombre }}
             </button>
 
-            <div class="collapse" id="paraCerrarSesion">
-                <button class="btn btn-danger" type="button" (click)="cerrarSesion()">
-                    Cerrar sesión
-                </button>
-            </div>
+            <button class="btn cerrar-sesion text-nowrap" type="button" (click)="cerrarSesion()">
+                Cerrar sesión
+            </button>
 
         </nav>
     </div>

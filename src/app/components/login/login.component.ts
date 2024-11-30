@@ -16,12 +16,12 @@ import { ExpandirBotonDirective } from '../../directives/expandir-boton.directiv
 export class LoginComponent {
   loginForm: FormGroup;
   quickLoginUsers = [
-    { name: 'Admin Candela', profileImage: '../../../assets/Imagenes-para-registro/usuario1.png', email: 'candelaadmin@yopmail.com', password: 'admincandela1234' },
-    { name: 'Especialista Roberto', profileImage: '../../../assets/Imagenes-para-registro/usuario2.png', email: 'robertopino@yopmail.com', password: 'roberto1234' },
-    { name: 'Especialista Hilda', profileImage: '../../../assets/Imagenes-para-registro/usuario3.png', email: 'hildablanco@yopmail.com', password: 'hilda1234' },
-    { name: 'Paciente Candela', profileImage: '../../../assets/Imagenes-para-registro/usuario4.png', email: 'candelabogado@yopmail.com', password: 'candela1234' },
-    { name: 'Paciente Micaela', profileImage: '../../../assets/Imagenes-para-registro/usuario5.png', email: 'micaelatouceda@yopmail.com', password: 'micaela1234' },
-    { name: 'Paciente Benjamín', profileImage: '../../../assets/Imagenes-para-registro/usuario6.png', email: 'benjaminpereyra@yopmail.com', password: 'benja1234' }
+    { name: 'Admin Candela', profileImage: '../../../assets/Imagenes-para-registro/usuario9.png', email: 'candelaadmin@yopmail.com', password: 'admincandela1234' },
+    { name: 'Especialista Roberto', profileImage: '../../../assets/Imagenes-para-registro/usuario15.png', email: 'robertopino@yopmail.com', password: 'roberto1234' },
+    { name: 'Especialista Hilda', profileImage: '../../../assets/Imagenes-para-registro/usuario14.png', email: 'hildablanco@yopmail.com', password: 'hilda1234' },
+    { name: 'Paciente Candela', profileImage: '../../../assets/Imagenes-para-registro/usuario1.png', email: 'candelabogado@yopmail.com', password: 'candela1234' },
+    { name: 'Paciente Micaela', profileImage: '../../../assets/Imagenes-para-registro/usuario4.png', email: 'micaelatouceda@yopmail.com', password: 'micaela1234' },
+    { name: 'Paciente Benjamín', profileImage: '../../../assets/Imagenes-para-registro/usuario3.png', email: 'benjaminpereyra@yopmail.com', password: 'benja1234' }
   ];
 
   constructor (

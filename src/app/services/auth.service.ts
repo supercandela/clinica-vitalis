@@ -126,4 +126,10 @@ export class AuthService {
         });
     });
   }
+
+  async logout (): Promise<void> {
+    return this.afAuth.signOut().then(() => {
+      this.usuarioActual = this.usuarioActual!;
+    });
+  }
 }
