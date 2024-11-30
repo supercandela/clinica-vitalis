@@ -10,21 +10,17 @@
 
     <div class="profesionales-container">
 
-        <div
-            *ngFor="let profesional of horarios"
-            class="profesional-card"
-        >
-            <span class="profesional-nombre">Dr. {{ profesional.usuario.apellido }}, {{ profesional.usuario.nombre }}</span>
-            <button 
+        <div *ngFor="let profesional of horarios" class="profesional-card">
+            <span class="profesional-nombre">Dr. {{ profesional.usuario.apellido }}, {{ profesional.usuario.nombre
+                }}</span>
+            <button [ngClass]="{'seleccionado': profesional.usuario.id === profesionalElegidoId}"
                 (click)="seleccionarProfesional(profesional.usuario.id)">
-                <img 
-                [src]="profesional.usuario.imagenUno" 
-                [alt]="profesional.usuario.apellido" 
-                class="profesional-imagen" />
+                <img [src]="profesional.usuario.imagenUno" [alt]="profesional.usuario.apellido"
+                    class="profesional-imagen" />
             </button>
         </div>
     </div>
-          
+
 </section>
 
 <section *ngIf="profesionalElegido" class="solicitar-turno">
@@ -32,21 +28,15 @@
 
     <div class="especialidades-container">
 
-        <div
-            *ngFor="let especialidad of profesionalElegido[0].usuario.especialidades"
-            class="especialidad-card"
-        >
+        <div *ngFor="let especialidad of profesionalElegido[0].usuario.especialidades" class="especialidad-card">
             <span class="especialidad-nombre">{{especialidad}}</span>
-            <button 
+            <button [ngClass]="{'seleccionado': especialidad === especialidadElegida}"
                 (click)="seleccionarEspecialidad(especialidad)">
-                <img 
-                [src]="obtenerImagenEspecialidad(especialidad)" 
-                [alt]="especialidad" 
-                class="especialidad-imagen" />
+                <img [src]="obtenerImagenEspecialidad(especialidad)" [alt]="especialidad" class="especialidad-imagen" />
             </button>
         </div>
     </div>
-          
+
 </section>
 
 <section *ngIf="horariosFiltrados" class="solicitar-turno">
@@ -54,7 +44,7 @@
 
     <div class="fechas-container">
         <div *ngFor="let fecha of proximasFechasDeAtencion" class="fecha-card">
-            <button (click)="seleccionarFecha(fecha)">
+            <button [ngClass]="{'seleccionado': fecha === fechaSeleccionada}" (click)="seleccionarFecha(fecha)">
                 <span class="fecha-nombre">{{ fecha }}</span>
             </button>
         </div>

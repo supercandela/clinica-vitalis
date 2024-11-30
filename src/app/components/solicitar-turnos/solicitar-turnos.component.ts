@@ -3,25 +3,25 @@ import { CommonModule } from '@angular/common';
 import { HeaderPacienteComponent } from '../header-paciente/header-paciente.component';
 import { AuthService } from '../../services/auth.service';
 import { Usuario } from '../../models/usuario.model';
-import { Horario } from '../../models/horario.model';
 import { HorariosService } from '../../services/horarios.service';
-import { identity, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import moment from 'moment';
 import 'moment/locale/es';
 import { TurnosService } from '../../services/turnos.service';
-// import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 export interface profesionalData {
-  idEspecialista: string,
-  horarios: [{
-    especialidad: string,
-    duracion: number,
-    dia: string,
-    horaInicio: string,
-    horaFin: string
-
-  }],
-  usuario: Usuario
+  idEspecialista: string;
+  horarios: [
+    {
+      especialidad: string;
+      duracion: number;
+      dia: string;
+      horaInicio: string;
+      horaFin: string;
+    }
+  ];
+  usuario: Usuario;
 }
 
 export enum FotosEspecialidades {
@@ -38,7 +38,6 @@ export enum FotosEspecialidades {
   selector: 'app-solicitar-turnos',
   standalone: true,
   imports: [HeaderPacienteComponent, CommonModule],
-  // imports: [CommonModule, FormsModule],
   templateUrl: './solicitar-turnos.component.html',
   styleUrl: './solicitar-turnos.component.scss',
 })
@@ -46,6 +45,7 @@ export class SolicitarTurnosComponent implements OnInit, OnDestroy {
   usuario?: Usuario;
   subHorarios?: Subscription;
   horarios: profesionalData[] = [];
+  profesionalElegidoId: string = '';
   profesionalElegido?: profesionalData[];
   especialidadElegida: string = '';
   horariosFiltrados?: profesionalData[];
@@ -68,7 +68,7 @@ export class SolicitarTurnosComponent implements OnInit, OnDestroy {
       .obtenerTodosLosHorarios()
       .subscribe({
         next: (data) => {
-          this.horarios = data as profesionalData[] ;
+          this.horarios = data as profesionalData[];
         },
         error: (error) => {
           console.error('Error al obtener horarios con usuarios:', error);
@@ -76,27 +76,40 @@ export class SolicitarTurnosComponent implements OnInit, OnDestroy {
       });
   }
 
-  seleccionarProfesional (id: string) {
+  seleccionarProfesional(id: string) {
+    this.profesionalElegidoId = id;
+    this.horariosFiltrados = undefined;
+    this.fechaSeleccionada = undefined;
     this.profesionalElegido = this.horarios.filter(
       (p) => p.idEspecialista === id
     );
   }
 
-  obtenerImagenEspecialidad (especialidad: string) {
-    const foto = FotosEspecialidades[especialidad as keyof typeof FotosEspecialidades];
-    // Si no encuentra un valor, devuelve el valor por defecto
+  obtenerImagenEspecialidad(especialidad: string) {
+    const foto =
+      FotosEspecialidades[especialidad as keyof typeof FotosEspecialidades];
     return foto ? foto : FotosEspecialidades.Default;
   }
 
-  seleccionarEspecialidad (especialidad: string) {
+  seleccionarEspecialidad(especialidad: string) {
+    this.fechaSeleccionada = undefined;
+    this.turnosAMostrar = [];
     this.especialidadElegida = especialidad;
-    let filtro = this.profesionalElegido?.map(item => ({
-      ...item,
-      horarios: item.horarios.filter(horario => horario.especialidad === especialidad)
-    })).filter(item => item.horarios.length > 0);
+    let filtro = this.profesionalElegido
+      ?.map((item) => ({
+        ...item,
+        horarios: item.horarios.filter(
+          (horario) => horario.especialidad === especialidad
+        ),
+      }))
+      .filter((item) => item.horarios.length > 0);
     this.horariosFiltrados = filtro as profesionalData[];
-    
-    let diasAtencion = this.horariosFiltrados?.map((especialista) => especialista.horarios.map((horario) => horario.dia)).flat();
+
+    let diasAtencion = this.horariosFiltrados
+      ?.map((especialista) =>
+        especialista.horarios.map((horario) => horario.dia)
+      )
+      .flat();
 
     this.proximasFechasDeAtencion = this.calcularProximasFechas(diasAtencion);
   }
@@ -112,30 +125,28 @@ export class SolicitarTurnosComponent implements OnInit, OnDestroy {
       Viernes: 5,
       Sábado: 6,
     };
-  
-    // Itera sobre los próximos 15 días
+
     for (let i = 0; i < 15; i++) {
       const fecha = moment().add(i, 'days');
-      const diaSemana = fecha.day(); // Obtiene el índice del día (0: Domingo, 1: Lunes, etc.)
+      const diaSemana = fecha.day();
       const diaTexto = Object.keys(diasSemana).find(
         (dia) => diasSemana[dia] === diaSemana
-      ); // Convierte el índice al nombre del día
-  
-      // Verifica si el día está en los días de atención y agrega la fecha al array
+      );
+
       if (diaTexto && diasAtencion.includes(diaTexto)) {
         fechasProximas.push(fecha.format('dddd, MMMM Do'));
       }
     }
-  
+
     return fechasProximas;
   }
 
-  seleccionarFecha (fecha: string) {
+  seleccionarFecha(fecha: string) {
     this.fechaSeleccionada = fecha;
     this.generarHorariosDisponibles();
   }
 
-  async generarHorariosDisponibles () {
+  async generarHorariosDisponibles() {
     this.turnosAMostrar = [];
     this.horariosFiltrados?.forEach((especialista) => {
       if (this.fechaSeleccionada) {
@@ -144,46 +155,82 @@ export class SolicitarTurnosComponent implements OnInit, OnDestroy {
         const filtroDiasSegunSeleccion = especialista.horarios.filter(
           (horario: any) => horario.dia.toLowerCase() === dia.toLowerCase()
         );
-    
+
         filtroDiasSegunSeleccion.forEach((horario: any) => {
-          const inicio = moment(horario.horaInicio, "HH:mm");
-          const fin = moment(horario.horaFin, "HH:mm");
+          const inicio = moment(horario.horaInicio, 'HH:mm');
+          const fin = moment(horario.horaFin, 'HH:mm');
           const duracion = horario.duracion;
-    
+
           while (inicio.isBefore(fin)) {
-            this.turnosAMostrar.push(inicio.format("HH:mm"));
-            inicio.add(duracion, "minutes");
+            this.turnosAMostrar.push(inicio.format('HH:mm'));
+            inicio.add(duracion, 'minutes');
           }
         });
       }
     });
 
-    const idEspecialista = this.horariosFiltrados?.map((especialista) => especialista.idEspecialista)[0];
+    const idEspecialista = this.horariosFiltrados?.map(
+      (especialista) => especialista.idEspecialista
+    )[0];
 
     if (idEspecialista) {
-      const turnos = await this.turnosService.obtenerTurnosPorDia(idEspecialista, this.especialidadElegida, this.formatearFecha());
-      this.turnosAMostrar = this.turnosAMostrar.filter(horario => 
-        !turnos.some(turno => turno.hora === horario)
+      const turnos = await this.turnosService.obtenerTurnosPorDia(
+        idEspecialista,
+        this.especialidadElegida,
+        this.formatearFecha()
+      );
+      this.turnosAMostrar = this.turnosAMostrar.filter(
+        (horario) => !turnos.some((turno) => turno.hora === horario)
       );
     }
-  };
+  }
 
-  formatearFecha () {
+  formatearFecha() {
     const fechaLimpia = this.fechaSeleccionada?.replace('º', '').trim();
     const fechaFormateada = moment(fechaLimpia, 'dddd, MMMM DD');
     return fechaFormateada.format('YYYY-MM-DD');
   }
 
-  seleccionarTurno (turno: string) {
-    const idEspecialista = this.horariosFiltrados?.map((especialista) => especialista.idEspecialista)[0];
+  seleccionarTurno(turno: string) {
+    const idEspecialista = this.horariosFiltrados?.map(
+      (especialista) => especialista.idEspecialista
+    )[0];
 
     if (idEspecialista && this.usuario) {
-      this.turnosService.guardarTurno(idEspecialista, this.usuario.id, this.especialidadElegida, this.formatearFecha(), turno);
+      try {
+        this.turnosService.guardarTurno(
+          idEspecialista,
+          this.usuario.id,
+          this.especialidadElegida,
+          this.formatearFecha(),
+          turno
+        );
+        Swal.fire({
+          icon: 'success',
+          title: 'Turno agendado',
+          text: `Fecha: ${this.fechaSeleccionada} - ${turno}hs.`,
+        });
+        this.resetearVariables();
+      } catch (error: any) {
+        Swal.fire({
+          icon: 'error',
+          title: 'No pudimos agendar el turno',
+          text: error,
+        });
+      }
     }
+  }
+
+  resetearVariables() {
+    this.profesionalElegido = undefined;
+    this.especialidadElegida = '';
+    this.horariosFiltrados = undefined;
+    this.proximasFechasDeAtencion = undefined;
+    this.fechaSeleccionada = undefined;
+    this.turnosAMostrar = [];
   }
 
   ngOnDestroy(): void {
     this.subHorarios?.unsubscribe();
   }
-
 }
