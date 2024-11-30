@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { EstadoTurno, TurnosService } from '../../services/turnos.service';
 import { Usuario } from '../../models/usuario.model';
 import { Turno } from '../../models/turno.model';
@@ -8,40 +8,47 @@ import { HeaderEspecialistaComponent } from '../header-especialista/header-espec
 import { ModalCancelacionTurnosDirective } from '../../directives/modal-cancelacion-turnos.directive';
 
 import Swal from 'sweetalert2';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-mis-turnos-especialista',
   standalone: true,
-  imports: [HeaderEspecialistaComponent, CommonModule, ModalCancelacionTurnosDirective],
+  imports: [
+    HeaderEspecialistaComponent,
+    CommonModule,
+    ModalCancelacionTurnosDirective,
+  ],
   templateUrl: './mis-turnos-especialista.component.html',
-  styleUrl: './mis-turnos-especialista.component.scss'
+  styleUrl: './mis-turnos-especialista.component.scss',
 })
-export class MisTurnosEspecialistaComponent implements OnInit {
+export class MisTurnosEspecialistaComponent implements OnInit, OnDestroy {
   usuario?: Usuario;
   misTurnos: Turno[] = [];
   misTurnosConDatosPaciente: any[] = [];
+  sub?: Subscription;
+  subTurnosConDatos?: Subscription;
 
-  constructor (
+  constructor(
     private authService: AuthService,
     private turnosService: TurnosService
-  ) {
-
-  }
+  ) {}
 
   async ngOnInit() {
     this.usuario = this.authService.usuarioActual;
 
-    this.misTurnos = await this.turnosService.obtenerTurnosPorCampo('especialistaId', this.usuario?.id);
-    console.log(this.misTurnos);
-
-    this.misTurnosConDatosPaciente = await this.turnosService.agregarUsuarioATurnos(this.misTurnos, "pacienteId");
+    this.sub = this.turnosService
+      .obtenerTurnosConUsuario('especialistaId', this.usuario?.id, 'pacienteId')
+      .subscribe((respuesta: any) => {
+        this.misTurnosConDatosPaciente = respuesta.sort((a: any, b: any) => {
+          return b.fecha - a.fecha;
+        });
+        console.log(this.misTurnosConDatosPaciente);
+      });
 
     this.handleReject = this.handleReject.bind(this);
-
-    console.log(this.misTurnosConDatosPaciente);
   }
 
-  async aceptarTurno (turnoId: string) {
+  async aceptarTurno(turnoId: string) {
     try {
       await this.cambiarEstadoTurno(turnoId, EstadoTurno.aceptado);
       Swal.fire({
@@ -58,7 +65,7 @@ export class MisTurnosEspecialistaComponent implements OnInit {
     }
   }
 
-  async handleCancel (comentario: string, turnoId: any) {
+  async handleCancel(comentario: string, turnoId: any) {
     try {
       await this.cambiarEstadoTurno(turnoId, EstadoTurno.cancelado, comentario);
       Swal.fire({
@@ -75,11 +82,9 @@ export class MisTurnosEspecialistaComponent implements OnInit {
     }
   }
 
-  async handleReject (comentario: string, turnoId: any) {
-    console.log('handleReject this:', this);
+  async handleReject(comentario: string, turnoId: any) {
     try {
       await this.cambiarEstadoTurno(turnoId, EstadoTurno.rechazado, comentario);
-      console.log("entro al try")
       Swal.fire({
         icon: 'success',
         title: 'Turno actualizado',
@@ -93,10 +98,20 @@ export class MisTurnosEspecialistaComponent implements OnInit {
       });
     }
   }
-  
-  async cambiarEstadoTurno (turnoId: string, nuevoEstado: string, comentario: string = '') {
-    console.log("entro al método")
-    await this.turnosService.cambiarEstadoTurnoPorId(turnoId, nuevoEstado, comentario) as string;
+
+  async cambiarEstadoTurno(
+    turnoId: string,
+    nuevoEstado: string,
+    comentario: string = ''
+  ) {
+    (await this.turnosService.cambiarEstadoTurnoPorId(
+      turnoId,
+      nuevoEstado,
+      comentario
+    )) as string;
   }
 
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe();
+  }
 }

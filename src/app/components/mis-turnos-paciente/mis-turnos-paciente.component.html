@@ -9,12 +9,16 @@
         <div class="card text-center" *ngFor="let turno of misTurnosConDatosEspecialistas">
             <div class="card-header">{{ turno.especialidad }}</div>
             <div class="card-body">
-              <h5 class="card-title">Dr. {{turno.usuario.apellido + ', ' + turno.usuario.nombre}}</h5>
-              <p class="card-text">Fecha: {{ turno.fecha.toDate() | date: 'dd/MM/yyyy' }} - {{ turno.hora }}hs.</p>
-              <button *ngIf="turno.estado !== 'Realizado' && turno.estado !== 'Rechazado' && turno.estado !== 'Cancelado'">Cancelar</button>
-              <button *ngIf="turno.resena !== ''">Ver reseña</button>
-              <button *ngIf="turno.resena !== '' && turno.estado === 'Realizado'">Completar encuesta</button>
-              <button *ngIf="turno.estado === 'Realizado'">Calificar atención</button>
+                <h5 class="card-title">Dr. {{turno.usuario.apellido + ', ' + turno.usuario.nombre}}</h5>
+                <p class="card-text"><strong>Fecha:</strong> {{ turno.fecha.toDate() | date: 'dd/MM/yyyy' }} - {{
+                    turno.hora }}hs.</p>
+                <p class="card-text" *ngIf="turno.estado === 'Cancelado' || turno.estado === 'Rechazado'">
+                    <strong>Comentario:</strong> {{ turno.comentarioCancelacion }}</p>
+                <button
+                    *ngIf="turno.estado !== 'Realizado' && turno.estado !== 'Rechazado' && turno.estado !== 'Cancelado'">Cancelar</button>
+                <button *ngIf="turno.resena !== ''">Ver reseña</button>
+                <button *ngIf="turno.resena !== '' && turno.estado === 'Realizado'">Completar encuesta</button>
+                <button *ngIf="turno.estado === 'Realizado'">Calificar atención</button>
             </div>
             <div class="card-footer text-muted">Estado: {{ turno.estado }}</div>
         </div>

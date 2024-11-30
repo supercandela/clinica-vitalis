@@ -38,31 +38,32 @@ export class MiPerfilEspecialistaComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.usuario = this.authService.usuarioActual;
 
-    this.subHorarios = this.horariosService.obtenerHorariosPorEspecialista(this.usuario.id).subscribe({
-      next: (horarios) => {
-        if (horarios.length === 0) {
-          this.horarios = [
-            {
-              especialidad: '',
-              duracion: 30,
-              dia: '',
-              horaInicio: '',
-              horaFin: '',
-              opcionesHoras: this.generarHoras(30, this.diasSemana[0]),
-              opcionesHorasFin: [],
-            },
-          ];
-        } else {
-          this.horarios = horarios.map((horario) =>
-            this.transformarHorarioFront(horario)
-          );
-          console.log(this.horarios);
-        }
-      },
-      error: (error) => {
-        console.error('Error al obtener los horarios:', error);
-      },
-    });
+    this.subHorarios = this.horariosService
+      .obtenerHorariosPorEspecialista(this.usuario.id)
+      .subscribe({
+        next: (horarios) => {
+          if (horarios.length === 0) {
+            this.horarios = [
+              {
+                especialidad: '',
+                duracion: 30,
+                dia: '',
+                horaInicio: '',
+                horaFin: '',
+                opcionesHoras: this.generarHoras(30, this.diasSemana[0]),
+                opcionesHorasFin: [],
+              },
+            ];
+          } else {
+            this.horarios = horarios.map((horario) =>
+              this.transformarHorarioFront(horario)
+            );
+          }
+        },
+        error: (error) => {
+          console.error('Error al obtener los horarios:', error);
+        },
+      });
   }
 
   agregarRenglon() {
@@ -83,7 +84,10 @@ export class MiPerfilEspecialistaComponent implements OnInit, OnDestroy {
 
   actualizarHorarios(index: number) {
     const duracion = this.horarios[index].duracion;
-    this.horarios[index].opcionesHoras = this.generarHoras(duracion, this.horarios[index].dia);
+    this.horarios[index].opcionesHoras = this.generarHoras(
+      duracion,
+      this.horarios[index].dia
+    );
     this.horarios[index].opcionesHorasFin = []; // Limpiar opciones de fin hasta seleccionar una hora de inicio
     this.horarios[index].horaInicio = '';
     this.horarios[index].horaFin = '';
@@ -104,7 +108,7 @@ export class MiPerfilEspecialistaComponent implements OnInit, OnDestroy {
   // Método para generar las opciones de horas basado en la duración
   generarHoras(duracion: number, dia: string): string[] {
     const horas = [];
-    if (dia === "Sábado") {
+    if (dia === 'Sábado') {
       for (let hora = 8; hora < 14; hora++) {
         horas.push(`${hora.toString().padStart(2, '0')}:00`);
         if (duracion === 30 && hora < 18) {
@@ -126,7 +130,7 @@ export class MiPerfilEspecialistaComponent implements OnInit, OnDestroy {
     const horas = [];
     let [hora, minuto] = horaInicio.split(':').map(Number);
 
-    if (dia === "Sábado") {
+    if (dia === 'Sábado') {
       while (hora < 14 || (hora === 13 && minuto === 0)) {
         minuto += duracion;
         if (minuto >= 60) {
@@ -162,7 +166,6 @@ export class MiPerfilEspecialistaComponent implements OnInit, OnDestroy {
   }
 
   transformarHorarioFront(horario: Horario): any {
-    console.log(horario)
     return {
       especialidad: horario.especialidad,
       duracion: horario.duracion,
@@ -170,7 +173,11 @@ export class MiPerfilEspecialistaComponent implements OnInit, OnDestroy {
       horaInicio: horario.horaInicio,
       horaFin: horario.horaFin,
       opcionesHoras: this.generarHoras(horario.duracion, horario.dia),
-      opcionesHorasFin: this.generarHorasFin(horario.horaInicio, horario.duracion, horario.dia),
+      opcionesHorasFin: this.generarHorasFin(
+        horario.horaInicio,
+        horario.duracion,
+        horario.dia
+      ),
     };
   }
 
@@ -188,7 +195,10 @@ export class MiPerfilEspecialistaComponent implements OnInit, OnDestroy {
     let horariosAGuardar = this.horarios.map((horario) =>
       this.transformarHorarioService(horario)
     );
-    this.horariosService.guardarHorarios(this.authService.usuarioActual.id, horariosAGuardar);
+    this.horariosService.guardarHorarios(
+      this.authService.usuarioActual.id,
+      horariosAGuardar
+    );
   }
 
   ngOnDestroy(): void {
