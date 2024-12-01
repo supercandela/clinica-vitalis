@@ -5,6 +5,8 @@
     </button>
 </div>
 
+<div class="spinner-container" [appSpinner]="isLoading"></div>
+
 <!-- Section: Design Block -->
 <section class="text-center text-lg-start fondo-seccion">
     <!-- Jumbotron -->
@@ -48,7 +50,7 @@
                             <div class="botones-acceso-rapido">
                                 <div class="quick-login-buttons">
                                     <button *ngFor="let user of quickLoginUsers" class="quick-login-button"
-                                    appExpandirBoton (click)="cargarForm(user.email, user.password)">
+                                        appExpandirBoton (click)="cargarForm(user.email, user.password)">
                                         <img [src]="user.profileImage" alt="Imagen de perfil" class="profile-image" />
                                         <span class="user-name">{{ user.name }}</span>
                                     </button>
