@@ -8,13 +8,14 @@ import { SpinnerDirective } from '../../directives/spinner.directive';
 import { EstadoTurno, TurnosService } from '../../services/turnos.service';
 import { Subscription } from 'rxjs';
 import { CapitalizarPrimeraLetraPipe } from '../../pipes/capitalizar-primera-letra.pipe';
+import { BooleanATextoPipe } from '../../pipes/boolean-a-texto.pipe';
 
 // import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-mi-perfil-paciente',
   standalone: true,
-  imports: [HeaderPacienteComponent, CommonModule, AlternarImagenDirective, SpinnerDirective, CapitalizarPrimeraLetraPipe],
+  imports: [HeaderPacienteComponent, CommonModule, AlternarImagenDirective, SpinnerDirective, CapitalizarPrimeraLetraPipe, BooleanATextoPipe],
   templateUrl: './mi-perfil-paciente.component.html',
   styleUrl: './mi-perfil-paciente.component.scss'
 })

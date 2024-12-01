@@ -44,7 +44,7 @@
       <div class="card-body">
         <ul class="list-group">
           <li class="list-group-item" *ngFor="let entry of turno.historiaClinica | keyvalue">
-            <p class="card-text"><strong>{{ entry.key | capitalizarPrimeraLetra }}: </strong>{{ entry.value }}</p>
+            <p class="card-text"><strong>{{ entry.key | capitalizarPrimeraLetra }}: </strong>{{ entry.value | booleanATexto }}</p>
           </li>
         </ul>
       </div>
