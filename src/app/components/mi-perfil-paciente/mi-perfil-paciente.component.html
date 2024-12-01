@@ -7,7 +7,7 @@
     <div class="card">
       <div class="row g-0">
         <div class="col-md-4 imagen-perfil">
-          <img *ngIf="usuario?.imagenUno" [src]="usuario?.imagenUno" alt="Imagen de usuario"
+          <img *ngIf="usuario?.imagenUno" [src]="usuario?.imagenUno" [appAlternarImagen]="[usuario?.imagenUno, usuario?.imagenDos]" alt="Imagen de usuario"
             class="img-fluid rounded-circle">
         </div>
         <div class="col-md-8 data-perfil">
