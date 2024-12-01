@@ -1,5 +1,7 @@
 <app-header-paciente></app-header-paciente>
 
+<div class="spinner-container" [appSpinner]="isLoading"></div>
+
 <section class="perfil">
   <h2>Mi Perfil</h2>
 
@@ -7,7 +9,8 @@
     <div class="card">
       <div class="row g-0">
         <div class="col-md-4 imagen-perfil">
-          <img *ngIf="usuario?.imagenUno" [src]="usuario?.imagenUno" [appAlternarImagen]="[usuario?.imagenUno, usuario?.imagenDos]" alt="Imagen de usuario"
+          <img *ngIf="usuario?.imagenUno" [src]="usuario?.imagenUno"
+            [appAlternarImagen]="[usuario?.imagenUno, usuario?.imagenDos]" alt="Imagen de usuario"
             class="img-fluid rounded-circle">
         </div>
         <div class="col-md-8 data-perfil">
@@ -24,6 +27,29 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="perfil">
+  <h2>Historia clínica</h2>
+
+  <div class="turnos">
+    <div class="card text-center" *ngFor="let turno of misTurnosParaHC">
+      <div class="card-header">{{ turno.especialidad }}</div>
+      <div class="card-body">
+        <h5 class="card-title">Dr. {{turno.usuario.apellido + ', ' + turno.usuario.nombre}}</h5>
+        <p class="card-text"><strong>Fecha:</strong> {{ turno.fecha.toDate() | date: 'dd/MM/yyyy' }} - {{turno.hora}}hs.</p>
+      </div>
+      <div class="card-body">
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let entry of turno.historiaClinica | keyvalue">
+            <p class="card-text"><strong>{{ entry.key | capitalizarPrimeraLetra }}: </strong>{{ entry.value }}</p>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card-footer text-muted"><strong>Reseña: </strong> {{ turno.resena }}</div>
     </div>
   </div>
 </section>
