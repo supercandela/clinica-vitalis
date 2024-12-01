@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { ModalCancelacionTurnosDirective } from '../../directives/modal-cancelacion-turnos.directive';
 import Swal from 'sweetalert2';
 import * as bootstrap from 'bootstrap';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-mis-turnos-paciente',
@@ -17,6 +18,7 @@ import * as bootstrap from 'bootstrap';
     HeaderPacienteComponent,
     CommonModule,
     ModalCancelacionTurnosDirective,
+    ReactiveFormsModule
   ],
   templateUrl: './mis-turnos-paciente.component.html',
   styleUrl: './mis-turnos-paciente.component.scss',
@@ -30,11 +32,27 @@ export class MisTurnosPacienteComponent implements OnInit, OnDestroy {
   estrellas = Array(5).fill(0);
   calificacionSeleccionada: number = 0;
   turnoSeleccionado: string = '';
+  //Modal Encuesta
+  encuestaForm: FormGroup;
+  nivelesSatisfaccion = [
+    'Muy Satisfecho',
+    'Satisfecho',
+    'Poco Satisfecho',
+    'Nada Satisfecho',
+  ];
+  opcionesInstalaciones = ['Excelentes', 'Buenas', 'Pueden mejorar', 'Malas'];
 
   constructor(
     private authService: AuthService,
-    private turnosService: TurnosService
-  ) {}
+    private turnosService: TurnosService,
+    private fb: FormBuilder
+  ) {
+    this.encuestaForm = this.fb.group({
+      demora: [null, [Validators.required, Validators.min(0)]],
+      satisfaccion: ['', Validators.required],
+      instalaciones: ['', Validators.required],
+    });
+  }
 
   async ngOnInit() {
     this.usuario = this.authService.usuarioActual;
@@ -94,19 +112,24 @@ export class MisTurnosPacienteComponent implements OnInit, OnDestroy {
   abrirModalCalificacion(turno: any): void {
     this.turnoSeleccionado = turno.id;
     this.calificacionSeleccionada = turno.calificacion || 0;
-    const modal = new bootstrap.Modal(document.getElementById('modalCalificacion')!);
+    const modal = new bootstrap.Modal(
+      document.getElementById('modalCalificacion')!
+    );
     modal.show();
   }
-  
+
   seleccionarCalificacion(calificacion: number): void {
     this.calificacionSeleccionada = calificacion;
   }
-  
+
   async guardarCalificacion() {
     if (this.turnoSeleccionado) {
-      let calificacionAGuardar = `${this.calificacionSeleccionada}/5`
+      let calificacionAGuardar = `${this.calificacionSeleccionada}/5`;
       try {
-        await this.turnosService.calificarTurno(this.turnoSeleccionado, calificacionAGuardar);
+        await this.turnosService.calificarTurno(
+          this.turnoSeleccionado,
+          calificacionAGuardar
+        );
         Swal.fire({
           icon: 'success',
           title: 'Gracias',
@@ -120,8 +143,51 @@ export class MisTurnosPacienteComponent implements OnInit, OnDestroy {
         });
       }
     }
-    const modal = bootstrap.Modal.getInstance(document.getElementById('modalCalificacion')!);
+    const modal = bootstrap.Modal.getInstance(
+      document.getElementById('modalCalificacion')!
+    );
     modal?.hide();
+  }
+
+  abrirModalEncuesta(turnoId: string) {
+    this.turnoSeleccionado = turnoId;
+    const modal = new bootstrap.Modal(
+      document.getElementById('modalEncuesta')!
+    );
+    modal.show();
+  }
+
+  async guardarEncuesta() {
+    if (this.encuestaForm.valid) {
+      const encuestaData = this.encuestaForm.value;
+      if (this.turnoSeleccionado) {
+        try {
+          await this.turnosService.guardarEncuesta(
+            this.turnoSeleccionado,
+            encuestaData.demora,
+            encuestaData.instalaciones,
+            encuestaData.satisfaccion
+          );
+          Swal.fire({
+            icon: 'success',
+            title: 'Gracias',
+            text: 'Con tus opiniones, mejoramos día a día.',
+          });
+        } catch (error: any) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Algo salió mal',
+            text: error,
+          });
+        }
+      }
+      const modal = bootstrap.Modal.getInstance(
+        document.getElementById('modalEncuesta')!
+      );
+      modal?.hide();
+    } else {
+      console.error('Formulario inválido');
+    }
   }
 
   ngOnDestroy(): void {

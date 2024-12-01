@@ -22,9 +22,12 @@
                     *ngIf="turno.estado !== 'Realizado' && turno.estado !== 'Rechazado' && turno.estado !== 'Cancelado'"
                     [context]="turno.id" [onSave]="handleCancel" [modalMessage]="'Ingrese el motivo de la cancelación:'"
                     appCancelModal>Cancelar</button>
-                <button *ngIf="turno.resena !== ''" (click)="verResena(turno)">{{turno.resenaEsVisible ? 'Ocultar reseña' : 'Ver reseña'}}</button>
-                <button *ngIf="turno.resena !== '' && turno.estado === 'Realizado'">Completar encuesta</button>
-                <button *ngIf="turno.estado === 'Realizado' && turno.calificaAtencion === ''" (click)="abrirModalCalificacion(turno)">Calificar atención</button>
+                <button *ngIf="turno.resena !== ''" (click)="verResena(turno)">
+                    {{turno.resenaEsVisible ? 'Ocultar reseña' : 'Ver reseña'}}
+                </button>
+                <button *ngIf="turno.estado === 'Realizado' && turno.calificaAtencion === ''"
+                    (click)="abrirModalCalificacion(turno.id)">Calificar atención</button>
+                <button *ngIf="turno.resena !== '' && turno.estado === 'Realizado' && !!!turno.encuestaCompletada"  (click)="abrirModalEncuesta(turno.id)">Completar encuesta</button>
             </div>
             <div class="card-footer text-muted">Estado: {{ turno.estado }}</div>
         </div>
@@ -33,28 +36,79 @@
 </section>
 
 <!-- MODAL CALIFICACION -->
-<div class="modal fade" id="modalCalificacion" tabindex="-1" aria-labelledby="modalCalificacionLabel" aria-hidden="true">
+<div class="modal fade" id="modalCalificacion" tabindex="-1" aria-labelledby="modalCalificacionLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCalificacionLabel">Calificar Atención</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <p>Selecciona una calificación:</p>
+                <div class="stars">
+                    <span *ngFor="let star of [1, 2, 3, 4, 5]; let i = index" class="star"
+                        [class.selected]="i < calificacionSeleccionada" (click)="seleccionarCalificacion(i + 1)">
+                        ★
+                    </span>
+                </div>
+                <p class="mt-3">Tu calificación: {{ calificacionSeleccionada }}/5</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn boton-guardar" (click)="guardarCalificacion()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Encuesta de Satisfacción -->
+<div class="modal fade" id="modalEncuesta" tabindex="-1" aria-labelledby="modalEncuestaLabel" aria-hidden="true">
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="modalCalificacionLabel">Calificar Atención</h5>
+          <h5 class="modal-title" id="modalEncuestaLabel">Encuesta de Satisfacción</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body text-center">
-          <p>Selecciona una calificación:</p>
-          <div class="stars">
-            <span *ngFor="let star of [1, 2, 3, 4, 5]; let i = index"
-                  class="star"
-                  [class.selected]="i < calificacionSeleccionada"
-                  (click)="seleccionarCalificacion(i + 1)">
-              ★
-            </span>
-          </div>
-          <p class="mt-3">Tu calificación: {{ calificacionSeleccionada }}/5</p>
+        <div class="modal-body">
+          <form [formGroup]="encuestaForm">
+            <!-- Pregunta 1 -->
+            <div class="mb-3">
+              <label for="demora" class="form-label">¿Cuántos minutos de demora tuvo su turno?</label>
+              <input
+                type="number"
+                class="form-control"
+                id="demora"
+                formControlName="demora"
+                placeholder="Ingrese los minutos"
+              />
+            </div>
+            <!-- Pregunta 2 -->
+            <div class="mb-3">
+              <label class="form-label">¿Cuán satisfecho está con la atención de personal no médico?</label>
+              <div class="form-check" *ngFor="let nivel of nivelesSatisfaccion">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  [value]="nivel"
+                  formControlName="satisfaccion"
+                  id="satisfaccion-{{ nivel }}"
+                />
+                <label class="form-check-label" for="satisfaccion-{{ nivel }}">{{ nivel }}</label>
+              </div>
+            </div>
+            <!-- Pregunta 3 -->
+            <div class="mb-3">
+              <label for="instalaciones" class="form-label">¿Cómo calificaría las instalaciones de la clínica?</label>
+              <select class="form-select" id="instalaciones" formControlName="instalaciones">
+                <option *ngFor="let opcion of opcionesInstalaciones" [value]="opcion">{{ opcion }}</option>
+              </select>
+            </div>
+          </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn boton-guardar" (click)="guardarCalificacion()">Guardar</button>
+          <button type="button" class="btn boton-guardar" (click)="guardarEncuesta()">Guardar</button>
         </div>
       </div>
     </div>

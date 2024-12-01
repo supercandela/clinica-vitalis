@@ -9,7 +9,7 @@ import {
   getDoc,
   doc,
 } from '@angular/fire/firestore';
-import { onSnapshot, Timestamp, updateDoc } from 'firebase/firestore';
+import { addDoc, onSnapshot, Timestamp, updateDoc } from 'firebase/firestore';
 
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Turno } from '../models/turno.model';
@@ -220,16 +220,41 @@ export class TurnosService {
     }
   }
 
-  async calificarTurno(
-    turnoId: string,
-    calificacion: string
-  ) {
+  async calificarTurno(turnoId: string, calificacion: string) {
     try {
       const turnoDocRef = doc(this.firestore, this.collectionName, turnoId);
       await updateDoc(turnoDocRef, {
         calificaAtencion: calificacion,
       });
       return 'Calificación guardada con éxito.';
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async guardarEncuesta(
+    turnoId: string,
+    demora: number,
+    instalaciones: string,
+    satisfaccion: string
+  ) {
+    try {
+      const turnoDocRef = doc(this.firestore, this.collectionName, turnoId);
+      await updateDoc(turnoDocRef, {
+        encuestaCompletada: true,
+      });
+
+      const encuestaData = {
+        turnoId,
+        demora,
+        instalaciones,
+        satisfaccion,
+      };
+
+      const encuestasCollectionRef = collection(this.firestore, 'encuestas');
+      await addDoc(encuestasCollectionRef, encuestaData);
+
+      return 'Encuesta guardada con éxito.';
     } catch (error) {
       return error;
     }

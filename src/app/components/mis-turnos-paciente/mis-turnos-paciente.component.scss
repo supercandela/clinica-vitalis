@@ -79,13 +79,25 @@ $white: #fff;
     color: #ddd;
     cursor: pointer;
     transition: color 0.3s ease;
-  }
-  
-  .star.selected {
+}
+
+.star.selected {
     color: #ffc107;
-  }
-  
-  .star:hover,
-  .star:hover ~ .star {
+}
+
+.star:hover,
+.star:hover~.star {
     color: #ffeb3b;
-  }
+}
+
+.modal-content {
+    border-radius: 8px;
+}
+
+.form-check-label {
+    margin-left: 8px;
+}
+
+.form-select {
+    border-radius: 4px;
+}
