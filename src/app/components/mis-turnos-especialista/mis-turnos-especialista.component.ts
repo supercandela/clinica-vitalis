@@ -10,6 +10,8 @@ import { ModalCancelacionTurnosDirective } from '../../directives/modal-cancelac
 import Swal from 'sweetalert2';
 import { Subscription } from 'rxjs';
 import { RouterModule } from '@angular/router';
+import { SpinnerDirective } from '../../directives/spinner.directive';
+import { EstadoTurnoColorDirective } from '../../directives/estado-turno-color.directive';
 
 @Component({
   selector: 'app-mis-turnos-especialista',
@@ -19,11 +21,14 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     ModalCancelacionTurnosDirective,
     RouterModule,
+    SpinnerDirective,
+    EstadoTurnoColorDirective
   ],
   templateUrl: './mis-turnos-especialista.component.html',
   styleUrl: './mis-turnos-especialista.component.scss',
 })
 export class MisTurnosEspecialistaComponent implements OnInit, OnDestroy {
+  isLoading: boolean = false;
   usuario?: Usuario;
   misTurnos: Turno[] = [];
   misTurnosConDatosPaciente: any[] = [];
@@ -38,6 +43,8 @@ export class MisTurnosEspecialistaComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     this.usuario = this.authService.usuarioActual;
 
+    this.isLoading = true;
+
     this.sub = this.turnosService
       .obtenerTurnosConUsuario('especialistaId', this.usuario?.id, 'pacienteId')
       .subscribe((respuesta: any) => {
@@ -49,6 +56,7 @@ export class MisTurnosEspecialistaComponent implements OnInit, OnDestroy {
           resenaEsVisible: false
         }));
         console.log(this.misTurnosConDatosPaciente);
+        this.isLoading = false;
       });
 
     this.handleReject = this.handleReject.bind(this);

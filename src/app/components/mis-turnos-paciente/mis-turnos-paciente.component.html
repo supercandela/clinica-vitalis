@@ -1,5 +1,7 @@
 <app-header-paciente></app-header-paciente>
 
+<div class="spinner-container" [appSpinner]="isLoading"></div>
+
 <section class="listado">
     <h2>Mis turnos</h2>
 
@@ -29,7 +31,7 @@
                     (click)="abrirModalCalificacion(turno.id)">Calificar atención</button>
                 <button *ngIf="turno.resena !== '' && turno.estado === 'Realizado' && !!!turno.encuestaCompletada"  (click)="abrirModalEncuesta(turno.id)">Completar encuesta</button>
             </div>
-            <div class="card-footer text-muted">Estado: {{ turno.estado }}</div>
+            <div class="card-footer text-muted" [appEstadoTurnoColor]="turno.estado">Estado: {{ turno.estado }}</div>
         </div>
     </div>
 

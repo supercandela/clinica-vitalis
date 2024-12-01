@@ -1,5 +1,7 @@
 <app-header-especialista></app-header-especialista>
 
+<div class="spinner-container" [appSpinner]="isLoading"></div>
+
 <section class="listado">
     <h2>Mis turnos</h2>
 
@@ -27,7 +29,7 @@
                     [routerLink]="['/guardar-historia-clinica', turno.id]">Finalizar</button>
                 <button *ngIf="turno.resena !== ''" (click)="verResena(turno)">{{turno.resenaEsVisible ? 'Ocultar reseña' : 'Ver reseña'}}</button>
             </div>
-            <div class="card-footer text-muted">Estado: {{ turno.estado }}</div>
+            <div class="card-footer text-muted" [appEstadoTurnoColor]="turno.estado">Estado: {{ turno.estado }}</div>
         </div>
     </div>
 
