@@ -33,14 +33,13 @@ export class MisTurnosEspecialistaComponent implements OnInit, OnDestroy {
   misTurnos: Turno[] = [];
   misTurnosConDatosPaciente: any[] = [];
   sub?: Subscription;
-  subTurnosConDatos?: Subscription;
 
   constructor(
     private authService: AuthService,
     private turnosService: TurnosService
   ) {}
 
-  async ngOnInit() {
+  ngOnInit() {
     this.usuario = this.authService.usuarioActual;
 
     this.isLoading = true;

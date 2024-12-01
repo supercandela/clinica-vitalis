@@ -5,11 +5,12 @@ import { Usuario } from '../../models/usuario.model';
 import { UsuariosService } from '../../services/usuarios.service';
 import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
+import { SpinnerDirective } from '../../directives/spinner.directive';
 
 @Component({
   selector: 'app-usuarios',
   standalone: true,
-  imports: [HeaderComponent, CommonModule],
+  imports: [HeaderComponent, CommonModule, SpinnerDirective],
   templateUrl: './usuarios.component.html',
   styleUrl: './usuarios.component.scss',
 })
@@ -17,6 +18,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   usuarios: Usuario[] = [];
   sub?: Subscription;
   usuarioActual?: Usuario;
+  isLoading: boolean = false;
 
   constructor(private usuariosService: UsuariosService) {}
 
@@ -25,10 +27,12 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   }
 
   obtenerUsuarios() {
+    this.isLoading = true;
     this.sub = this.usuariosService
       .obtenerUsuarios()
       .subscribe((respuesta: any) => {
         this.usuarios = respuesta;
+        this.isLoading = false;
       });
   }
 

@@ -259,4 +259,63 @@ export class TurnosService {
       return error;
     }
   }
+
+  obtenerTurnosConEspecialistaYPaciente(): Observable<any[]> {
+    return new Observable<any[]>((observer) => {
+      try {
+        const turnosRef = collection(this.firestore, this.collectionName);
+  
+        const unsubscribe = onSnapshot(
+          turnosRef,
+          async (querySnapshot) => {
+            try {
+              const turnos = querySnapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+              })) as Turno[];
+  
+              const turnosConUsuarios = await Promise.all(
+                turnos.map(async (turno) => {
+                  const especialistaRef = doc(
+                    collection(this.firestore, 'usuarios'),
+                    turno.especialistaId
+                  );
+                  const especialistaSnap = await getDoc(especialistaRef);
+                  const especialistaData = especialistaSnap.exists()
+                    ? { id: especialistaSnap.id, ...especialistaSnap.data() }
+                    : null;
+  
+                  const pacienteRef = doc(
+                    collection(this.firestore, 'usuarios'),
+                    turno.pacienteId
+                  );
+                  const pacienteSnap = await getDoc(pacienteRef);
+                  const pacienteData = pacienteSnap.exists()
+                    ? { id: pacienteSnap.id, ...pacienteSnap.data() }
+                    : null;
+  
+                  return {
+                    ...turno,
+                    especialista: especialistaData,
+                    paciente: pacienteData,
+                  };
+                })
+              );
+  
+              observer.next(turnosConUsuarios);
+            } catch (error) {
+              observer.error(
+                'Error al enriquecer los turnos con los datos de usuarios.'
+              );
+            }
+          },
+          (error) => {
+            observer.error('Error al obtener los turnos.');
+          }
+        );
+      } catch (error) {
+        observer.error('Error al inicializar la consulta de turnos.');
+      }
+    });
+  }
 }

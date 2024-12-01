@@ -12,6 +12,7 @@ import { MiPerfilPacienteComponent } from './components/mi-perfil-paciente/mi-pe
 import { SolicitarTurnosComponent } from './components/solicitar-turnos/solicitar-turnos.component';
 import { MisTurnosPacienteComponent } from './components/mis-turnos-paciente/mis-turnos-paciente.component';
 import { MisTurnosEspecialistaComponent } from './components/mis-turnos-especialista/mis-turnos-especialista.component';
+import { TurnosAdminComponent } from './components/turnos-admin/turnos-admin.component';
 
 export const routes: Routes = [
   {
@@ -43,6 +44,12 @@ export const routes: Routes = [
   {
     path: 'usuarios',
     component: UsuariosComponent,
+    canActivate: [authGuard],
+    data: { role: 'admin' },
+  },
+  {
+    path: 'turnos-admin',
+    component: TurnosAdminComponent,
     canActivate: [authGuard],
     data: { role: 'admin' },
   },

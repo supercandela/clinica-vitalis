@@ -1,0 +1,57 @@
+$moradoInstitucional: rgb(103, 48, 63);
+$rosaInstitucional: rgb(242, 228, 233);
+$moradoInstitucionalal70: rgba(103, 48, 63, 0.7);
+$moradoInstitucionalal60: rgba(103, 48, 63, 0.6);
+$moradoInstitucionalal30: rgba(103, 48, 63, 0.3);
+$secondary-color: #f8e1f4; // Rosa pálido
+$text-color: #333;
+$white: #fff;
+
+.listado {
+    padding: 3rem 1rem;
+    background-color: $rosaInstitucional;
+    border-bottom: 3px dashed $moradoInstitucionalal70;
+    text-align: center;
+
+    h2 {
+        color: $moradoInstitucional;
+        margin-bottom: 2rem;
+        font-weight: 700;
+        letter-spacing: 0.3em;
+    }
+
+
+    .turnos {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+        padding: 1rem;
+
+        .card {
+            max-width: 350px;
+
+            .card-header {
+                background-color: $moradoInstitucionalal70;
+                color: $rosaInstitucional;
+                font-size: 1.1em;
+                font-weight: 700;
+            }
+
+            .card-body {
+                background-color: $moradoInstitucionalal30;
+                color: $text-color;
+
+                h5 {
+                    border-bottom: 2px solid $moradoInstitucional;
+                }
+            }
+
+            .card-footer {
+                color: $moradoInstitucional;
+                font-size: 1.1em;
+                font-weight: 700;
+            }
+        }
+    }
+}

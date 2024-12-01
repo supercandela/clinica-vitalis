@@ -1,0 +1,32 @@
+<app-header></app-header>
+
+<div class="spinner-container" [appSpinner]="isLoading"></div>
+
+<section class="listado">
+    <h2>Turnos</h2>
+
+    <!-- AGREGAR FILTRO -->
+
+    <div class="turnos">
+        <div class="card text-center" *ngFor="let turno of turnosCompletos">
+            <div class="card-header">{{ turno.especialidad }}</div>
+            <div class="card-body">                
+                <h5 class="card-title">Dr. {{turno.especialista.apellido + ', ' + turno.especialista.nombre}}</h5>
+                <h5 class="card-title">Paciente: {{turno.paciente.apellido + ', ' + turno.paciente.nombre}}</h5>
+                <p class="card-text"><strong>Fecha:</strong> {{ turno.fecha.toDate() | date: 'dd/MM/yyyy' }} -
+                    {{turno.hora }}hs.</p>
+                <p class="card-text" *ngIf="turno.estado === 'Cancelado' || turno.estado === 'Rechazado'">
+                    <strong>Comentario:</strong> {{ turno.comentarioCancelacion }}
+                </p>
+                <p class="card-text" *ngIf="turno.resenaEsVisible">
+                    <strong>Reseña:</strong> {{ turno.resena }}
+                </p>
+                <button *ngIf="turno.estado === 'Pendiente'" [context]="turno.id" [onSave]="handleCancel"
+                    [modalMessage]="'Ingrese el motivo de la cancelación:'" appCancelModal>Cancelar</button>
+                <button *ngIf="turno.resena !== ''" (click)="verResena(turno)">{{turno.resenaEsVisible ? 'Ocultar reseña' : 'Ver reseña'}}</button>
+            </div>
+            <div class="card-footer text-muted" [appEstadoTurnoColor]="turno.estado">Estado: {{ turno.estado }}</div>
+        </div>
+    </div>
+
+</section>
