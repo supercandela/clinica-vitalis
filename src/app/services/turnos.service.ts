@@ -219,4 +219,19 @@ export class TurnosService {
       return error;
     }
   }
+
+  async calificarTurno(
+    turnoId: string,
+    calificacion: string
+  ) {
+    try {
+      const turnoDocRef = doc(this.firestore, this.collectionName, turnoId);
+      await updateDoc(turnoDocRef, {
+        calificaAtencion: calificacion,
+      });
+      return 'Calificación guardada con éxito.';
+    } catch (error) {
+      return error;
+    }
+  }
 }

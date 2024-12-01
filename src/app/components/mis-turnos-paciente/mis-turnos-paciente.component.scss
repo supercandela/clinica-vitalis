@@ -14,10 +14,10 @@ $white: #fff;
     text-align: center;
 
     h2 {
-      color: $moradoInstitucional;
-      margin-bottom: 2rem;
-      font-weight: 700;
-      letter-spacing: 0.3em;
+        color: $moradoInstitucional;
+        margin-bottom: 2rem;
+        font-weight: 700;
+        letter-spacing: 0.3em;
     }
 
     .turnos {
@@ -50,3 +50,42 @@ $white: #fff;
         }
     }
 }
+
+.modal-header {
+    background-color: $moradoInstitucionalal70;
+    color: $rosaInstitucional;
+    font-size: 1.1em;
+    font-weight: 700;
+}
+
+.modal-body {
+    background-color: $moradoInstitucionalal30;
+    color: $text-color;
+}
+
+.modal-footer {
+    color: $moradoInstitucional;
+    font-size: 1.1em;
+    font-weight: 700;
+}
+
+.boton-guardar {
+    background-color: $moradoInstitucionalal70;
+    color: $rosaInstitucional;
+}
+
+.star {
+    font-size: 2rem;
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .star.selected {
+    color: #ffc107;
+  }
+  
+  .star:hover,
+  .star:hover ~ .star {
+    color: #ffeb3b;
+  }

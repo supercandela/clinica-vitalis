@@ -8,11 +8,16 @@ import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { ModalCancelacionTurnosDirective } from '../../directives/modal-cancelacion-turnos.directive';
 import Swal from 'sweetalert2';
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-mis-turnos-paciente',
   standalone: true,
-  imports: [HeaderPacienteComponent, CommonModule, ModalCancelacionTurnosDirective],
+  imports: [
+    HeaderPacienteComponent,
+    CommonModule,
+    ModalCancelacionTurnosDirective,
+  ],
   templateUrl: './mis-turnos-paciente.component.html',
   styleUrl: './mis-turnos-paciente.component.scss',
 })
@@ -21,6 +26,10 @@ export class MisTurnosPacienteComponent implements OnInit, OnDestroy {
   misTurnos: Turno[] = [];
   misTurnosConDatosEspecialistas: any[] = [];
   sub?: Subscription;
+  //Modal Calificacion
+  estrellas = Array(5).fill(0);
+  calificacionSeleccionada: number = 0;
+  turnoSeleccionado: string = '';
 
   constructor(
     private authService: AuthService,
@@ -38,14 +47,15 @@ export class MisTurnosPacienteComponent implements OnInit, OnDestroy {
             return b.fecha - a.fecha;
           }
         );
-        this.misTurnosConDatosEspecialistas = this.misTurnosConDatosEspecialistas.map(turno => ({
-          ...turno,
-          resenaEsVisible: false
-        }));
+        this.misTurnosConDatosEspecialistas =
+          this.misTurnosConDatosEspecialistas.map((turno) => ({
+            ...turno,
+            resenaEsVisible: false,
+          }));
         console.log(this.misTurnosConDatosEspecialistas);
       });
 
-      this.handleCancel = this.handleCancel.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
   }
 
   async handleCancel(comentario: string, turnoId: any) {
@@ -79,6 +89,39 @@ export class MisTurnosPacienteComponent implements OnInit, OnDestroy {
 
   verResena(turno: any) {
     turno.resenaEsVisible = !turno.resenaEsVisible;
+  }
+
+  abrirModalCalificacion(turno: any): void {
+    this.turnoSeleccionado = turno.id;
+    this.calificacionSeleccionada = turno.calificacion || 0;
+    const modal = new bootstrap.Modal(document.getElementById('modalCalificacion')!);
+    modal.show();
+  }
+  
+  seleccionarCalificacion(calificacion: number): void {
+    this.calificacionSeleccionada = calificacion;
+  }
+  
+  async guardarCalificacion() {
+    if (this.turnoSeleccionado) {
+      let calificacionAGuardar = `${this.calificacionSeleccionada}/5`
+      try {
+        await this.turnosService.calificarTurno(this.turnoSeleccionado, calificacionAGuardar);
+        Swal.fire({
+          icon: 'success',
+          title: 'Gracias',
+          text: 'Con tus opiniones, mejoramos día a día.',
+        });
+      } catch (error: any) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Algo salió mal',
+          text: error,
+        });
+      }
+    }
+    const modal = bootstrap.Modal.getInstance(document.getElementById('modalCalificacion')!);
+    modal?.hide();
   }
 
   ngOnDestroy(): void {
