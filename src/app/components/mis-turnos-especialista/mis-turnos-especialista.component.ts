@@ -44,6 +44,10 @@ export class MisTurnosEspecialistaComponent implements OnInit, OnDestroy {
         this.misTurnosConDatosPaciente = respuesta.sort((a: any, b: any) => {
           return b.fecha - a.fecha;
         });
+        this.misTurnosConDatosPaciente = this.misTurnosConDatosPaciente.map(turno => ({
+          ...turno,
+          resenaEsVisible: false
+        }));
         console.log(this.misTurnosConDatosPaciente);
       });
 
@@ -112,6 +116,10 @@ export class MisTurnosEspecialistaComponent implements OnInit, OnDestroy {
       nuevoEstado,
       comentario
     )) as string;
+  }
+
+  verResena(turno: any) {
+    turno.resenaEsVisible = !turno.resenaEsVisible;
   }
 
   ngOnDestroy(): void {

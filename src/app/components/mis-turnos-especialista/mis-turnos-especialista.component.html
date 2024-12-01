@@ -15,6 +15,9 @@
                 <p class="card-text" *ngIf="turno.estado === 'Cancelado' || turno.estado === 'Rechazado'">
                     <strong>Comentario:</strong> {{ turno.comentarioCancelacion }}
                 </p>
+                <p class="card-text" *ngIf="turno.resenaEsVisible">
+                    <strong>Reseña:</strong> {{ turno.resena }}
+                </p>
                 <button *ngIf="turno.estado === 'Pendiente'" (click)="aceptarTurno(turno.id)">Aceptar</button>
                 <button *ngIf="turno.estado === 'Pendiente'" [context]="turno.id" [onSave]="handleCancel"
                     [modalMessage]="'Ingrese el motivo de la cancelación:'" appCancelModal>Cancelar</button>
@@ -22,7 +25,7 @@
                     [modalMessage]="'Ingrese el motivo del rechazo:'" appCancelModal>Rechazar</button>
                 <button *ngIf="turno.estado === 'Aceptado'"
                     [routerLink]="['/guardar-historia-clinica', turno.id]">Finalizar</button>
-                <button *ngIf="turno.resena !== ''">Ver reseña</button>
+                <button *ngIf="turno.resena !== ''" (click)="verResena(turno)">{{turno.resenaEsVisible ? 'Ocultar reseña' : 'Ver reseña'}}</button>
             </div>
             <div class="card-footer text-muted">Estado: {{ turno.estado }}</div>
         </div>

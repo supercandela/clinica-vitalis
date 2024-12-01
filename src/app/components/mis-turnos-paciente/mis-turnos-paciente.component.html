@@ -13,11 +13,16 @@
                 <p class="card-text"><strong>Fecha:</strong> {{ turno.fecha.toDate() | date: 'dd/MM/yyyy' }} - {{
                     turno.hora }}hs.</p>
                 <p class="card-text" *ngIf="turno.estado === 'Cancelado' || turno.estado === 'Rechazado'">
-                    <strong>Comentario:</strong> {{ turno.comentarioCancelacion }}</p>
-                <button *ngIf="turno.estado !== 'Realizado' && turno.estado !== 'Rechazado' && turno.estado !== 'Cancelado'" [context]="turno.id" [onSave]="handleCancel"
-                    [modalMessage]="'Ingrese el motivo de la cancelación:'" appCancelModal>Cancelar</button>
-
-                <button *ngIf="turno.resena !== ''">Ver reseña</button>
+                    <strong>Comentario:</strong> {{ turno.comentarioCancelacion }}
+                </p>
+                <p class="card-text" *ngIf="turno.resenaEsVisible">
+                    <strong>Reseña:</strong> {{ turno.resena }}
+                </p>
+                <button
+                    *ngIf="turno.estado !== 'Realizado' && turno.estado !== 'Rechazado' && turno.estado !== 'Cancelado'"
+                    [context]="turno.id" [onSave]="handleCancel" [modalMessage]="'Ingrese el motivo de la cancelación:'"
+                    appCancelModal>Cancelar</button>
+                <button *ngIf="turno.resena !== ''" (click)="verResena(turno)">{{turno.resenaEsVisible ? 'Ocultar reseña' : 'Ver reseña'}}</button>
                 <button *ngIf="turno.resena !== '' && turno.estado === 'Realizado'">Completar encuesta</button>
                 <button *ngIf="turno.estado === 'Realizado'">Calificar atención</button>
             </div>
