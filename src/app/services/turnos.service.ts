@@ -205,4 +205,18 @@ export class TurnosService {
       return error;
     }
   }
+
+  async finalizarTurno(turnoId: string, resena: string, historiaClinica: any) {
+    try {
+      const turnoDocRef = doc(this.firestore, this.collectionName, turnoId);
+      await updateDoc(turnoDocRef, {
+        estado: EstadoTurno.realizado,
+        resena: resena,
+        historiaClinica: historiaClinica,
+      });
+      return 'Estado del turno actualizado con éxito';
+    } catch (error) {
+      return error;
+    }
+  }
 }

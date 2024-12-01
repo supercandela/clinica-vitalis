@@ -1,0 +1,158 @@
+$moradoInstitucional: rgb(103, 48, 63);
+$rosaInstitucional: rgb(242, 228, 233);
+$moradoInstitucionalal70: rgba(103, 48, 63, 0.7);
+$moradoInstitucionalal60: rgba(103, 48, 63, 0.6);
+$moradoInstitucionalal30: rgba(103, 48, 63, 0.3);
+$secondary-color: #f8e1f4; // Rosa pálido
+$text-color: #333;
+$white: #fff;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: $text-color;
+}
+
+section {
+    background-color: $rosaInstitucional;
+    border-bottom: 3px dashed $moradoInstitucionalal70;
+    padding: 3rem 1rem;
+    text-align: center;
+
+    h2 {
+        color: $moradoInstitucional;
+        margin-bottom: 2rem;
+        font-weight: 700;
+        letter-spacing: 0.3em;
+    }
+
+    .seccion {
+        max-width: 60%;
+        margin: 0 auto;
+
+        h4 {
+            color: $moradoInstitucional;
+            margin-bottom: 2rem;
+            font-weight: 700;
+            letter-spacing: 0.3em;
+        }
+
+        textarea {
+            width: 800px;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 14px;
+            margin-bottom: 4em;
+        }
+
+        form {
+            width: 800px;
+            margin: 0 auto;
+            padding: 10px;
+            border: 2px solid #afafaf;
+            border-radius: 4px;
+            font-size: 1.2em;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            label.label-campo-estatico {
+                display: inline-block;
+                text-align: right;
+                width: 30%;
+            }
+
+            input.input-campo-estatico {
+                display: inline-block;
+                text-align: left;
+                margin-left: 10%;
+                width: 50%;
+            }
+
+            div.mensaje-error {
+                border: 1px solid $moradoInstitucional;
+                border-radius: 5px;
+                margin-top: 0.5em;
+            }
+
+            input[type="range"] {
+                height: 1.4em;
+                margin-top: 3px;
+            }
+
+            .wrapper {
+                height: 2em;
+                width: 50%;
+                display: inline-block;
+
+                .container {
+                    height: 3.5em;
+                    width: 6em;
+                    transform: translate(50%, -3%);
+                    border-radius: 0.3em;
+
+                    input[type="checkbox"] {
+                        appearance: none;
+                        height: 1.8em;
+                        width: 4.1em;
+                        background-color: $moradoInstitucionalal70;
+                        position: absolute;
+                        margin: auto;
+                        left: 0;
+                        right: 0;
+                        top: 0;
+                        bottom: 0;
+                        outline: none;
+                        cursor: pointer;
+                        transform: skewX(-7deg);
+                        transition: 0.3s;
+                    }
+
+                    input[type="checkbox"]:before {
+                        font-size: 1em;
+                        content: "No";
+                        position: absolute;
+                        width: 2.5em;
+                        height: 1.3em;
+                        background-color: $rosaInstitucional;
+                        color: $text-color;
+                        top: 0.3em;
+                        left: 0.3em;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        transition: 0.3s;
+                    }
+
+                    input[type="checkbox"]:checked {
+                        background: linear-gradient(135deg, purple, red);
+
+                    }
+
+                    input[type="checkbox"]:checked:before {
+                        content: "Sí";
+                        left: 1.1em;
+                        color: $text-color;
+                    }
+                }
+            }
+
+            button.boton-enviar {
+                background-color: $moradoInstitucional;
+                color: white;
+            }
+
+            button.boton-cancelar {
+                background-color: $moradoInstitucionalal30;
+                color: $text-color;
+            }
+        }
+    }
+}

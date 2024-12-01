@@ -9,6 +9,7 @@ import { ModalCancelacionTurnosDirective } from '../../directives/modal-cancelac
 
 import Swal from 'sweetalert2';
 import { Subscription } from 'rxjs';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-mis-turnos-especialista',
@@ -17,6 +18,7 @@ import { Subscription } from 'rxjs';
     HeaderEspecialistaComponent,
     CommonModule,
     ModalCancelacionTurnosDirective,
+    RouterModule,
   ],
   templateUrl: './mis-turnos-especialista.component.html',
   styleUrl: './mis-turnos-especialista.component.scss',

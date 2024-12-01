@@ -24,17 +24,17 @@ export const routes: Routes = [
   },
   {
     path: 'registro-paciente',
-    component: RegistroPacienteComponent
+    component: RegistroPacienteComponent,
   },
   {
     path: 'registro-especialista',
-    component: RegistroEspecialistaComponent
+    component: RegistroEspecialistaComponent,
   },
   {
     path: 'registro-admin',
     component: RegistroAdminComponent,
     canActivate: [authGuard],
-    data: { role: 'admin' }
+    data: { role: 'admin' },
   },
   {
     path: 'login',
@@ -44,37 +44,51 @@ export const routes: Routes = [
     path: 'usuarios',
     component: UsuariosComponent,
     canActivate: [authGuard],
-    data: { role: 'admin' }
+    data: { role: 'admin' },
   },
   {
     path: 'mi-perfil-especialista',
     component: MiPerfilEspecialistaComponent,
     canActivate: [authGuard],
-    data: { role: 'especialista' }
+    data: { role: 'especialista' },
   },
   {
     path: 'mi-perfil-paciente',
     component: MiPerfilPacienteComponent,
     canActivate: [authGuard],
-    data: { role: 'paciente' }
+    data: { role: 'paciente' },
   },
   {
     path: 'solicitar-turnos',
     component: SolicitarTurnosComponent,
     canActivate: [authGuard],
-    data: { role: 'paciente' }
+    data: { role: 'paciente' },
   },
   {
     path: 'mis-turnos-paciente',
     component: MisTurnosPacienteComponent,
     canActivate: [authGuard],
-    data: { role: 'paciente' }
+    data: { role: 'paciente' },
   },
   {
     path: 'mis-turnos-especialista',
     component: MisTurnosEspecialistaComponent,
     canActivate: [authGuard],
-    data: { role: 'especialista' }
+    data: { role: 'especialista' },
   },
-  { path: '**', component: LandingComponent }
+  {
+    path: 'guardar-historia-clinica',
+    children: [
+      {
+        path: ':turnoId',
+        loadComponent: () =>
+          import(
+            './components/cargar-historia-clinica/cargar-historia-clinica.component'
+          ).then((c) => c.CargarHistoriaClinicaComponent),
+      },
+    ],
+    canActivate: [authGuard],
+    data: { role: 'especialista' },
+  },
+  { path: '**', component: LandingComponent },
 ];

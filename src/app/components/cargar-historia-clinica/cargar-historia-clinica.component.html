@@ -1,0 +1,164 @@
+<app-header-especialista></app-header-especialista>
+
+<section>
+    <h2>Finalizar turno</h2>
+
+    <div class="seccion">
+        <h4>Ingrese una reseña:</h4>
+        <textarea name="resena" id="resena" [(ngModel)]="resena"></textarea>
+    </div>
+    <div class="seccion">
+        <h4>Complete la historia clínica:</h4>
+
+        <form [formGroup]="historiaClinicaForm">
+
+            <h5>Campos estáticos</h5>
+
+            <div class="mb-4">
+                <label class="form-label label-campo-estatico" for="altura">Altura</label>
+                <input type="number" id="altura" class="form-control input-campo-estatico" formControlName="altura" />
+                <div class="mensaje-error"
+                    *ngIf="historiaClinicaForm.get('altura')?.invalid && historiaClinicaForm.get('altura')?.touched">
+                    La altura es requerida. Su valor debe estar entre 15 y 250 cm.
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label label-campo-estatico" for="peso">Peso</label>
+                <input type="number" id="peso" class="form-control input-campo-estatico" formControlName="peso" />
+                <div class="mensaje-error"
+                    *ngIf="historiaClinicaForm.get('peso')?.invalid && historiaClinicaForm.get('peso')?.touched">
+                    El peso es requerido. Su valor debe estar entre 0 y 400 kg.
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label label-campo-estatico" for="temperatura">Temperatura</label>
+                <input type="number" id="temperatura" class="form-control input-campo-estatico"
+                    formControlName="temperatura" />
+                <div class="mensaje-error"
+                    *ngIf="historiaClinicaForm.get('temperatura')?.invalid && historiaClinicaForm.get('temperatura')?.touched">
+                    La temperatura es requerida. Su valor debe estar entre 32° y 50° C.
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label label-campo-estatico" for="presion">Presión</label>
+                <input type="text" id="presion" class="form-control input-campo-estatico" formControlName="presion" />
+                <div class="mensaje-error"
+                    *ngIf="historiaClinicaForm.get('presion')?.invalid && historiaClinicaForm.get('presion')?.touched">
+                    La presión es requerida y debe estar expresada en formato Max-Min (Ej: 125-80).
+                </div>
+            </div>
+
+            <h5>Campos dinámicos</h5>
+
+            <div class="mb-4">
+                <label class="form-label label-campo-estatico" for="campoDinamicoClave1">Dato 1</label>
+                <input type="text" id="campoDinamicoClave1" class="form-control input-campo-estatico"
+                    formControlName="campoDinamicoClave1" />
+                <div class="mensaje-error"
+                    *ngIf="historiaClinicaForm.get('campoDinamicoClave1')?.invalid && historiaClinicaForm.get('campoDinamicoClave1')?.touched">
+                    La clave y valor de los campos dinámicos son obligatorias.
+                </div>
+
+                <label class="form-label label-campo-estatico" for="campoDinamicoValor1">Valor 1</label>
+                <input type="text" id="campoDinamicoValor1" class="form-control input-campo-estatico"
+                    formControlName="campoDinamicoValor1" />
+                <div class="mensaje-error"
+                    *ngIf="historiaClinicaForm.get('campoDinamicoValor1')?.invalid && historiaClinicaForm.get('campoDinamicoValor1')?.touched">
+                    La clave y valor de los campos dinámicos son obligatorias.
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label label-campo-estatico" for="campoDinamicoClave2">Dato 2</label>
+                <input type="text" id="campoDinamicoClave2" class="form-control input-campo-estatico"
+                    formControlName="campoDinamicoClave2" />
+                <div class="mensaje-error"
+                    *ngIf="historiaClinicaForm.get('campoDinamicoClave2')?.invalid && historiaClinicaForm.get('campoDinamicoClave2')?.touched">
+                    La clave y valor de los campos dinámicos son obligatorias.
+                </div>
+
+                <label class="form-label label-campo-estatico" for="campoDinamicoValor2">Valor 2</label>
+                <input type="text" id="campoDinamicoValor2" class="form-control input-campo-estatico"
+                    formControlName="campoDinamicoValor2" />
+                <div class="mensaje-error"
+                    *ngIf="historiaClinicaForm.get('campoDinamicoValor2')?.invalid && historiaClinicaForm.get('campoDinamicoValor2')?.touched">
+                    La clave y valor de los campos dinámicos son obligatorias.
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label label-campo-estatico" for="campoDinamicoClave3">Dato 3</label>
+                <input type="text" id="campoDinamicoClave3" class="form-control input-campo-estatico"
+                    formControlName="campoDinamicoClave3" />
+                <div class="mensaje-error"
+                    *ngIf="historiaClinicaForm.get('campoDinamicoClave3')?.invalid && historiaClinicaForm.get('campoDinamicoClave3')?.touched">
+                    La clave y valor de los campos dinámicos son obligatorias.
+                </div>
+
+                <label class="form-label label-campo-estatico" for="campoDinamicoValor3">Valor 3</label>
+                <input type="text" id="campoDinamicoValor3" class="form-control input-campo-estatico"
+                    formControlName="campoDinamicoValor3" />
+                <div class="mensaje-error"
+                    *ngIf="historiaClinicaForm.get('campoDinamicoValor3')?.invalid && historiaClinicaForm.get('campoDinamicoValor3')?.touched">
+                    La clave y valor de los campos dinámicos son obligatorias.
+                </div>
+            </div>
+
+            <h5>Campos dinámicos extendidos</h5>
+
+            <div class="mb-4">
+                <label class="form-label label-campo-estatico" for="campoDinamicoClave4">Dato 4</label>
+                <input type="text" id="campoDinamicoClave4" class="form-control input-campo-estatico"
+                    formControlName="campoDinamicoClave4" />
+                <div class="mensaje-error"
+                    *ngIf="historiaClinicaForm.get('campoDinamicoClave4')?.invalid && historiaClinicaForm.get('campoDinamicoClave4')?.touched">
+                    La clave y valor de los campos dinámicos son obligatorias.
+                </div>
+
+                <label class="form-label label-campo-estatico" for="campoDinamicoValor4">Valor 4</label>
+                <input type="range" id="campoDinamicoValor4" class="form-control input-campo-estatico"
+                    formControlName="campoDinamicoValor4" />
+                <div class="mensaje-error"
+                    *ngIf="historiaClinicaForm.get('campoDinamicoValor4')?.invalid && historiaClinicaForm.get('campoDinamicoValor4')?.touched">
+                    La clave y valor de los campos dinámicos son obligatorias.
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <div>
+                    <label class="form-label label-campo-estatico" for="campoDinamicoClave6">Dato 6</label>
+                    <input type="text" id="campoDinamicoClave6" class="form-control input-campo-estatico"
+                        formControlName="campoDinamicoClave6" />
+                    <div class="mensaje-error"
+                        *ngIf="historiaClinicaForm.get('campoDinamicoClave6')?.invalid && historiaClinicaForm.get('campoDinamicoClave6')?.touched">
+                        La clave y valor de los campos dinámicos son obligatorias.
+                    </div>
+                </div>
+
+                <div>
+                    <label class="form-label label-campo-estatico" for="campoDinamicoValor6">Valor 6</label>
+
+                    <div class="wrapper">
+                        <div class="container">
+                            <input type="checkbox" id="campoDinamicoValor6" formControlName="campoDinamicoValor6" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn mb-4 boton-enviar" [disabled]="!this.historiaClinicaForm.valid"
+                (click)="finalizarTurno()">
+                Guardar
+            </button>
+
+            <button type="button" class="btn mb-4 boton-cancelar" onclick="window.history.back()">
+                Cancelar
+            </button>
+
+        </form>
+
+    </div>
+</section>
