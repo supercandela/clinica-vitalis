@@ -92,6 +92,7 @@ export class AuthService {
                     if (!this.usuarioActual.verificado) {
                       reject(new Error('Aún no has sido habilitado para operar.'));
                     }
+                    this.registrarLogUsuario(this.usuarioActual);
                     resolve(); // Inicio de sesión exitoso
                   }
                 },
@@ -131,5 +132,25 @@ export class AuthService {
     return this.afAuth.signOut().then(() => {
       this.usuarioActual = this.usuarioActual!;
     });
+  }
+
+  registrarLogUsuario(usuario: Usuario) {
+    const ingresoData = {
+      idUsuario: usuario.id,
+      nombre: usuario.nombre,
+      apellido: usuario.apellido,
+      tipo: usuario.tipo,
+      fecha: firebase.firestore.FieldValue.serverTimestamp(),
+    };
+
+    this.firestore
+      .collection('logsIngresosUsuarios')
+      .add(ingresoData)
+      .then(() => {
+        console.log('Ingreso registrado correctamente.');
+      })
+      .catch((error) => {
+        console.error('Error al registrar el ingreso:', error);
+      });
   }
 }
