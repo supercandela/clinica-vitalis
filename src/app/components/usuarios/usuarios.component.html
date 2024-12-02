@@ -5,7 +5,9 @@
 <section class="listado">
     <h2>Listado de Usuarios</h2>
 
-    <div class="tabla-usuarios">
+    <button class="btn boton-descargar" (click)="exportAsExcel('listado_usuarios')">Exportar a Excel</button>
+
+    <div class="tabla-usuarios" id="tabla-usuarios-completa">
         <table>
             <thead>
                 <tr>

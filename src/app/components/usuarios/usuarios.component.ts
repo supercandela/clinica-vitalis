@@ -7,6 +7,9 @@ import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 import { SpinnerDirective } from '../../directives/spinner.directive';
 
+import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
+
 @Component({
   selector: 'app-usuarios',
   standalone: true,
@@ -54,6 +57,41 @@ export class UsuariosComponent implements OnInit, OnDestroy {
       });
     }
     this.obtenerUsuarios();
+  }
+
+  exportAsExcel(fileName: string): void {
+    let encabezados = Object.keys(this.usuarios[0]);
+
+    const datosConvertidos = this.usuarios.map((dato) => ({
+      ...dato,
+      especialidades: Array.isArray(dato.especialidades) ? dato.especialidades.join(', ') : dato.especialidades,
+    }));
+
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet([]);
+    XLSX.utils.sheet_add_aoa(worksheet, [encabezados], {
+      origin: 'A1',
+    });
+    XLSX.utils.sheet_add_json(worksheet, datosConvertidos, {
+      origin: 'A2',
+      skipHeader: true,
+    });
+
+    const workbook: XLSX.WorkBook = {
+      Sheets: { data: worksheet },
+      SheetNames: ['data'],
+    };
+
+    const excelBuffer: any = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+
+    this.guardarArchivoXLS(excelBuffer, fileName);
+  }
+
+  private guardarArchivoXLS(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([buffer], { type: 'application/octet-stream' });
+    FileSaver.saveAs(data, `${fileName}.xlsx`);
   }
 
   ngOnDestroy(): void {
