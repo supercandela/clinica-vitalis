@@ -20,6 +20,21 @@ $white: #fff;
         letter-spacing: 0.3em;
     }
 
+    div.filtro {
+        background-color: $moradoInstitucionalal30;
+        padding: 20px;
+        font-size: 1.3em;
+        border-radius: 10px;
+        box-shadow: 0 0 5px $text-color;
+        width: 40%;
+        margin: 15px auto;
+
+        label {
+            color: $text-color;
+            font-weight: 600;
+            margin-right: 2em;
+        }
+    }
 
     .turnos {
         display: flex;

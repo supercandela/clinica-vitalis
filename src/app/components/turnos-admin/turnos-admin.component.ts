@@ -9,45 +9,54 @@ import { Usuario } from '../../models/usuario.model';
 import { TurnosService, EstadoTurno } from '../../services/turnos.service';
 import { ModalCancelacionTurnosDirective } from '../../directives/modal-cancelacion-turnos.directive';
 import Swal from 'sweetalert2';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-turnos-admin',
   standalone: true,
-  imports: [HeaderComponent, EstadoTurnoColorDirective, CommonModule, SpinnerDirective, ModalCancelacionTurnosDirective],
+  imports: [
+    HeaderComponent,
+    EstadoTurnoColorDirective,
+    CommonModule,
+    SpinnerDirective,
+    ModalCancelacionTurnosDirective,
+    FormsModule,
+  ],
   templateUrl: './turnos-admin.component.html',
-  styleUrl: './turnos-admin.component.scss'
+  styleUrl: './turnos-admin.component.scss',
 })
 export class TurnosAdminComponent implements OnInit, OnDestroy {
   turnosCompletos: any[] = [];
   isLoading: boolean = false;
   sub?: Subscription;
   usuario?: Usuario;
+  misTurnosFiltrados: any[] = [];
+  filtro: string = '';
 
-  constructor (
+  constructor(
     private authService: AuthService,
     private turnosService: TurnosService
-  ) {
-
-  }
+  ) {}
 
   ngOnInit() {
     this.usuario = this.authService.usuarioActual;
     this.isLoading = true;
 
     this.sub = this.turnosService
-    .obtenerTurnosConEspecialistaYPaciente()
-    .subscribe((respuesta: any) => {
-      this.turnosCompletos = respuesta.sort((a: any, b: any) => {
-        return b.fecha - a.fecha;
+      .obtenerTurnosConEspecialistaYPaciente()
+      .subscribe((respuesta: any) => {
+        this.turnosCompletos = respuesta.sort((a: any, b: any) => {
+          return b.fecha - a.fecha;
+        });
+        this.turnosCompletos = this.turnosCompletos.map((turno) => ({
+          ...turno,
+          resenaEsVisible: false,
+        }));
+        console.log(this.turnosCompletos);
+        this.actualizarFiltro('');
+        this.isLoading = false;
       });
-      this.turnosCompletos = this.turnosCompletos.map(turno => ({
-        ...turno,
-        resenaEsVisible: false
-      }));
-      console.log(this.turnosCompletos);
-      this.isLoading = false;
-    });
-    
+
     this.handleCancel = this.handleCancel.bind(this);
   }
 
@@ -84,8 +93,43 @@ export class TurnosAdminComponent implements OnInit, OnDestroy {
     )) as string;
   }
 
+  actualizarFiltro(filtro: string): void {
+    if (filtro.length >= 3) {
+      this.filtro = filtro.toLowerCase();
+
+      this.misTurnosFiltrados = this.turnosCompletos.filter(
+        (turno) => this.objetoCoincideConFiltro(turno, this.filtro)
+      );
+    } else {
+      this.misTurnosFiltrados = [...this.turnosCompletos];
+    }
+    console.log(this.misTurnosFiltrados);
+  }
+
+  private objetoCoincideConFiltro(obj: any, filtro: string): boolean {
+    for (const [key, val] of Object.entries(obj)) {
+      if (key.toLowerCase().includes(filtro)) {
+        return true;
+      }
+
+      if (
+        val != null &&
+        typeof val !== 'object' &&
+        val.toString().toLowerCase().includes(filtro)
+      ) {
+        return true;
+      }
+
+      if (val != null && typeof val === 'object') {
+        if (this.objetoCoincideConFiltro(val, filtro)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
   }
-
 }
