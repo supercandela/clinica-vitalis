@@ -5,10 +5,14 @@
 <section class="listado">
     <h2>Mis turnos</h2>
 
-    <!-- AGREGAR FILTRO -->
+    <div class="filtro">
+        <label for="filtro">Filtrar por:</label>
+        <input id="filtro" type="text" [(ngModel)]="filtro" (ngModelChange)="actualizarFiltro($event)"
+            placeholder="Ingrese valor a buscar" />
+    </div>
 
     <div class="turnos">
-        <div class="card text-center" *ngFor="let turno of misTurnosConDatosPaciente">
+        <div class="card text-center" *ngFor="let turno of misTurnosFiltrados">
             <div class="card-header">{{ turno.especialidad }}</div>
             <div class="card-body">
                 <h5 class="card-title">Paciente: {{turno.usuario.apellido + ', ' + turno.usuario.nombre}}</h5>
@@ -27,7 +31,9 @@
                     [modalMessage]="'Ingrese el motivo del rechazo:'" appCancelModal>Rechazar</button>
                 <button *ngIf="turno.estado === 'Aceptado'"
                     [routerLink]="['/guardar-historia-clinica', turno.id]">Finalizar</button>
-                <button *ngIf="turno.resena !== ''" (click)="verResena(turno)">{{turno.resenaEsVisible ? 'Ocultar reseña' : 'Ver reseña'}}</button>
+                <button *ngIf="turno.resena !== ''" (click)="verResena(turno)">
+                    {{turno.resenaEsVisible ? 'Ocultar reseña' : 'Ver reseña'}}
+                </button>
             </div>
             <div class="card-footer text-muted" [appEstadoTurnoColor]="turno.estado">Estado: {{ turno.estado }}</div>
         </div>

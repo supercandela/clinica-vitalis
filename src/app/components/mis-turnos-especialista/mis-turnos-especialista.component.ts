@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 import { RouterModule } from '@angular/router';
 import { SpinnerDirective } from '../../directives/spinner.directive';
 import { EstadoTurnoColorDirective } from '../../directives/estado-turno-color.directive';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-mis-turnos-especialista',
@@ -22,7 +23,8 @@ import { EstadoTurnoColorDirective } from '../../directives/estado-turno-color.d
     ModalCancelacionTurnosDirective,
     RouterModule,
     SpinnerDirective,
-    EstadoTurnoColorDirective
+    EstadoTurnoColorDirective,
+    FormsModule
   ],
   templateUrl: './mis-turnos-especialista.component.html',
   styleUrl: './mis-turnos-especialista.component.scss',
@@ -30,8 +32,9 @@ import { EstadoTurnoColorDirective } from '../../directives/estado-turno-color.d
 export class MisTurnosEspecialistaComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   usuario?: Usuario;
-  misTurnos: Turno[] = [];
   misTurnosConDatosPaciente: any[] = [];
+  misTurnosFiltrados: any[] = [];
+  filtro: string = '';
   sub?: Subscription;
 
   constructor(
@@ -50,11 +53,14 @@ export class MisTurnosEspecialistaComponent implements OnInit, OnDestroy {
         this.misTurnosConDatosPaciente = respuesta.sort((a: any, b: any) => {
           return b.fecha - a.fecha;
         });
-        this.misTurnosConDatosPaciente = this.misTurnosConDatosPaciente.map(turno => ({
-          ...turno,
-          resenaEsVisible: false
-        }));
+        this.misTurnosConDatosPaciente = this.misTurnosConDatosPaciente.map(
+          (turno) => ({
+            ...turno,
+            resenaEsVisible: false,
+          })
+        );
         console.log(this.misTurnosConDatosPaciente);
+        this.actualizarFiltro('');
         this.isLoading = false;
       });
 
@@ -127,6 +133,42 @@ export class MisTurnosEspecialistaComponent implements OnInit, OnDestroy {
 
   verResena(turno: any) {
     turno.resenaEsVisible = !turno.resenaEsVisible;
+  }
+
+  actualizarFiltro(filtro: string): void {
+    if (filtro.length >= 3) {
+      this.filtro = filtro.toLowerCase();
+
+      this.misTurnosFiltrados = this.misTurnosConDatosPaciente.filter((turno) =>
+        this.objetoCoincideConFiltro(turno, this.filtro)
+      );
+    } else {
+      this.misTurnosFiltrados = [...this.misTurnosConDatosPaciente];
+    }
+    console.log(this.misTurnosFiltrados);
+  }
+
+  private objetoCoincideConFiltro(obj: any, filtro: string): boolean {
+    for (const [key, val] of Object.entries(obj)) {
+      if (key.toLowerCase().includes(filtro)) {
+        return true;
+      }
+
+      if (
+        val != null &&
+        typeof val !== 'object' &&
+        val.toString().toLowerCase().includes(filtro)
+      ) {
+        return true;
+      }
+
+      if (val != null && typeof val === 'object') {
+        if (this.objetoCoincideConFiltro(val, filtro)) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   ngOnDestroy(): void {

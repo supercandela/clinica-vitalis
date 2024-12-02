@@ -9,7 +9,13 @@ import { Subscription } from 'rxjs';
 import { ModalCancelacionTurnosDirective } from '../../directives/modal-cancelacion-turnos.directive';
 import Swal from 'sweetalert2';
 import * as bootstrap from 'bootstrap';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+  FormsModule,
+} from '@angular/forms';
 import { SpinnerDirective } from '../../directives/spinner.directive';
 import { EstadoTurnoColorDirective } from '../../directives/estado-turno-color.directive';
 
@@ -22,7 +28,8 @@ import { EstadoTurnoColorDirective } from '../../directives/estado-turno-color.d
     ModalCancelacionTurnosDirective,
     ReactiveFormsModule,
     SpinnerDirective,
-    EstadoTurnoColorDirective
+    EstadoTurnoColorDirective,
+    FormsModule,
   ],
   templateUrl: './mis-turnos-paciente.component.html',
   styleUrl: './mis-turnos-paciente.component.scss',
@@ -30,8 +37,8 @@ import { EstadoTurnoColorDirective } from '../../directives/estado-turno-color.d
 export class MisTurnosPacienteComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   usuario?: Usuario;
-  misTurnos: Turno[] = [];
   misTurnosConDatosEspecialistas: any[] = [];
+  misTurnosFiltrados: any[] = [];
   sub?: Subscription;
   //Modal Calificacion
   estrellas = Array(5).fill(0);
@@ -46,6 +53,7 @@ export class MisTurnosPacienteComponent implements OnInit, OnDestroy {
     'Nada Satisfecho',
   ];
   opcionesInstalaciones = ['Excelentes', 'Buenas', 'Pueden mejorar', 'Malas'];
+  filtro: string = '';
 
   constructor(
     private authService: AuthService,
@@ -77,6 +85,7 @@ export class MisTurnosPacienteComponent implements OnInit, OnDestroy {
             resenaEsVisible: false,
           }));
         console.log(this.misTurnosConDatosEspecialistas);
+        this.actualizarFiltro('');
         this.isLoading = false;
       });
 
@@ -195,6 +204,42 @@ export class MisTurnosPacienteComponent implements OnInit, OnDestroy {
     } else {
       console.error('Formulario inválido');
     }
+  }
+
+  actualizarFiltro(filtro: string): void {
+    if (filtro.length >= 3) {
+      this.filtro = filtro.toLowerCase();
+
+      this.misTurnosFiltrados = this.misTurnosConDatosEspecialistas.filter(
+        (turno) => this.objetoCoincideConFiltro(turno, this.filtro)
+      );
+    } else {
+      this.misTurnosFiltrados = [...this.misTurnosConDatosEspecialistas];
+    }
+    console.log(this.misTurnosFiltrados);
+  }
+
+  private objetoCoincideConFiltro(obj: any, filtro: string): boolean {
+    for (const [key, val] of Object.entries(obj)) {
+      if (key.toLowerCase().includes(filtro)) {
+        return true;
+      }
+
+      if (
+        val != null &&
+        typeof val !== 'object' &&
+        val.toString().toLowerCase().includes(filtro)
+      ) {
+        return true;
+      }
+
+      if (val != null && typeof val === 'object') {
+        if (this.objetoCoincideConFiltro(val, filtro)) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   ngOnDestroy(): void {
