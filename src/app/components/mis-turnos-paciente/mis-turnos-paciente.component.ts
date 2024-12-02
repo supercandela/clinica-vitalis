@@ -117,7 +117,7 @@ export class MisTurnosPacienteComponent implements OnInit, OnDestroy {
   }
 
   abrirModalCalificacion(turno: any): void {
-    this.turnoSeleccionado = turno.id;
+    this.turnoSeleccionado = turno;
     this.calificacionSeleccionada = turno.calificacion || 0;
     const modal = new bootstrap.Modal(
       document.getElementById('modalCalificacion')!
