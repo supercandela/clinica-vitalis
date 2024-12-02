@@ -13,6 +13,7 @@ import { SolicitarTurnosComponent } from './components/solicitar-turnos/solicita
 import { MisTurnosPacienteComponent } from './components/mis-turnos-paciente/mis-turnos-paciente.component';
 import { MisTurnosEspecialistaComponent } from './components/mis-turnos-especialista/mis-turnos-especialista.component';
 import { TurnosAdminComponent } from './components/turnos-admin/turnos-admin.component';
+import { GraficosComponent } from './components/graficos/graficos.component';
 
 export const routes: Routes = [
   {
@@ -50,6 +51,12 @@ export const routes: Routes = [
   {
     path: 'turnos-admin',
     component: TurnosAdminComponent,
+    canActivate: [authGuard],
+    data: { role: 'admin' },
+  },
+  {
+    path: 'estadisticas',
+    component: GraficosComponent,
     canActivate: [authGuard],
     data: { role: 'admin' },
   },

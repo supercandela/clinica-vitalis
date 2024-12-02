@@ -13,7 +13,7 @@ import { addDoc, onSnapshot, Timestamp, updateDoc } from 'firebase/firestore';
 
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Turno } from '../models/turno.model';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
 
 export enum EstadoTurno {
   pendiente = 'Pendiente',
@@ -108,23 +108,17 @@ export class TurnosService {
     }
   }
 
-  async obtenerTodosLosTurnos() {
+  obtenerTodosLosTurnos(): Observable<any[]> {
     const turnosRef = collection(this.firestore, this.collectionName);
 
-    try {
-      const querySnapshot = await getDocs(turnosRef);
-
-      const turnos = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-
-      console.log(turnos);
-      return turnos;
-    } catch (error) {
-      console.error('Error al obtener los turnos:', error);
-      return [];
-    }
+    return from(
+      getDocs(turnosRef).then((querySnapshot) => {
+        return querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+      })
+    );
   }
 
   obtenerTurnosConUsuario(

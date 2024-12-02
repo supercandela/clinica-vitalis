@@ -1,0 +1,32 @@
+$moradoInstitucional: rgb(103, 48, 63);
+$rosaInstitucional: rgb(242, 228, 233);
+$moradoInstitucionalal70: rgba(103, 48, 63, 0.7);
+$moradoInstitucionalal60: rgba(103, 48, 63, 0.6);
+$secondary-color: #f8e1f4; // Rosa pálido
+$text-color: #333;
+$white: #fff;
+
+.listado {
+  padding: 3rem 1rem;
+  background-color: $rosaInstitucional;
+  border-bottom: 3px dashed $moradoInstitucionalal70;
+  text-align: center;
+
+  h2 {
+    color: $moradoInstitucional;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+  }
+
+  .boton-descargar {
+    background-color: $moradoInstitucionalal70;
+    color: $rosaInstitucional;
+  }
+
+  .chart-container {
+    height: 50vh;
+    width: auto;
+  }
+
+}
