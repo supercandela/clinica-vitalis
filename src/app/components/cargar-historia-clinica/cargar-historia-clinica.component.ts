@@ -65,6 +65,8 @@ export class CargarHistoriaClinicaComponent implements OnInit {
       campoDinamicoValor3: new FormControl('', [Validators.required]),
       campoDinamicoClave4: new FormControl('', [Validators.required]),
       campoDinamicoValor4: new FormControl('', [Validators.required]),
+      campoDinamicoClave5: new FormControl('', [Validators.required]),
+      campoDinamicoValor5: new FormControl('', [Validators.pattern('^[0-9]{1,15}$'), Validators.required]),
       campoDinamicoClave6: new FormControl('', [Validators.required]),
       campoDinamicoValor6: new FormControl('', [Validators.required]),
     });
@@ -92,6 +94,10 @@ export class CargarHistoriaClinicaComponent implements OnInit {
       this.historiaClinicaForm.get('campoDinamicoClave4')?.value || '';
     let valor4 =
       this.historiaClinicaForm.get('campoDinamicoValor4')?.value || '';
+    let clave5 =
+      this.historiaClinicaForm.get('campoDinamicoClave5')?.value || '';
+    let valor5 =
+      this.historiaClinicaForm.get('campoDinamicoValor5')?.value || '';
     let clave6 =
       this.historiaClinicaForm.get('campoDinamicoClave6')?.value || '';
     let valor6 = this.historiaClinicaForm.get('campoDinamicoValor6')?.value;
@@ -101,6 +107,7 @@ export class CargarHistoriaClinicaComponent implements OnInit {
       { clave: clave2, valor: valor2 },
       { clave: clave3, valor: valor3 },
       { clave: clave4, valor: valor4 },
+      { clave: clave5, valor: valor5 },
       { clave: clave6, valor: valor6 },
     ];
 

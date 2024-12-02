@@ -128,6 +128,24 @@
             </div>
 
             <div class="mb-4">
+                <label class="form-label label-campo-estatico" for="campoDinamicoClave5">Dato 5</label>
+                <input type="text" id="campoDinamicoClave5" class="form-control input-campo-estatico"
+                    formControlName="campoDinamicoClave5" />
+                <div class="mensaje-error"
+                    *ngIf="historiaClinicaForm.get('campoDinamicoClave5')?.invalid && historiaClinicaForm.get('campoDinamicoClave5')?.touched">
+                    La clave y valor de los campos dinámicos son obligatorias.
+                </div>
+
+                <label class="form-label label-campo-estatico" for="campoDinamicoValor5">Valor 5</label>
+                <input type="number" id="campoDinamicoValor5" class="form-control input-campo-estatico"
+                    formControlName="campoDinamicoValor5" />
+                <div class="mensaje-error"
+                    *ngIf="historiaClinicaForm.get('campoDinamicoValor5')?.invalid && historiaClinicaForm.get('campoDinamicoValor5')?.touched">
+                    La clave y valor de los campos dinámicos son obligatorias.
+                </div>
+            </div>
+
+            <div class="mb-4">
                 <div>
                     <label class="form-label label-campo-estatico" for="campoDinamicoClave6">Dato 6</label>
                     <input type="text" id="campoDinamicoClave6" class="form-control input-campo-estatico"
