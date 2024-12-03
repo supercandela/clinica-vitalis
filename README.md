@@ -1,20 +1,3 @@
-# ClinicaVitalis
-
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.1.
-
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-
 <div style="display: flex; justify-content: center;">
   <img src="/src/assets/isologo-horizontal.png" alt="Logo 'Clínica Vitalis'" title="Clínica Vitalis">
 </div>
@@ -35,6 +18,10 @@ Este proyecto forma parte de la currícula de la materia Laboratorio IV, de la T
 Corresponde al último cuatrimestre de la carrera. 
 
 <br>
+
+## 👩‍💻 _URL Proyecto Web_ 👩‍💻
+
+[Clínica Vitalis Web Page](https://nueva-clinica-vitalis.web.app/)
 
 <br>
 
@@ -64,7 +51,6 @@ Corresponde al último cuatrimestre de la carrera.
 2. Diseño limpio y enfocado en la experiencia del usuario, adaptable a diferentes dispositivos.
 
 <br>
-<br>
 
 ## 📲 _Arquitectura del proyecto_ 📲
 
@@ -88,11 +74,13 @@ Corresponde al último cuatrimestre de la carrera.
 ## 📸 _Imágenes de la aplicación_ 📸
 | Imágen | Valor | 
 | ------ | ------ | 
-| <img src="src\assets\Imagenes-Aplicacion-Celular\Login.jpeg"> | Pantalla login con botón de usuarios (acceso rápido) desplegado | 
-| <img src="src\assets\Imagenes-Aplicacion-Celular\Registro.jpeg">  | Pantalla de registro de cliente nuevo | 
-| <img src="src\assets\Imagenes-Aplicacion-Celular\Pantalla Dueño-Supervisor.jpeg">  | Pantalla inicio de dueño/supervisor | 
-| <img src="src\assets\Imagenes-Aplicacion-Celular\Pantalla-Clientes-Espera-Dueño.jpeg">  | Pantalla de clientes en espera para dueño/supervisor | 
-| <img src="src\assets\Imagenes-Aplicacion-Celular\Pantalla-Ingreso-Cliente.jpeg">  | Pantalla inicio de Cliente | 
-| <img src="src\assets\Imagenes-Aplicacion-Celular\Pantalla-Pedidos-Mozo.jpeg">  | Pantalla de pedidos en espera/preparando/listo para mozo | 
-| <img src="src\assets\Imagenes-Aplicacion-Celular\Pantalla-CHat-Mozo-Cliente.jpeg">  | Pantalla de chat entre mozo y cliente | 
-
+| <img src="src\assets\Pantallas\01-Landing Page.png"> | Landing Page | 
+| <img src="src\assets\Pantallas\02-Registro Especialistas.png">  | Pantalla de registro de Especialistas | 
+| <img src="src\assets\Pantallas\03-Registro Pacientes.png">  | Pantalla de registro de Pacientes | 
+| <img src="src\assets\Pantallas\04-Login.png">  | Pantalla de Login | 
+| <img src="src\assets\Pantallas\05-Mi Perfil - Especialista.png">  | Pantalla Mi Perfil de Especialistas | 
+| <img src="src\assets\Pantallas\06-Mis Turnos - Especialista.png">  | Pantalla Mis Turnos de Especialistas | 
+| <img src="src\assets\Pantallas\07-Sección Pacientes Especialista.png">  | Pantalla Sección Pacientes de Especialistas | 
+| <img src="src\assets\Pantallas\08-Mi Perfil - Paciente.png">  | Pantalla Mi Perfil de Paciente | 
+| <img src="src\assets\Pantallas\08-Solicitar Turno - Paciente.png">  | Pantalla Solicitar Turno para Pacientes | 
+| <img src="src\assets\Pantallas\09-Usuarios-Admin.png">  | Pantalla Listado de Usuarios de Admin | 
