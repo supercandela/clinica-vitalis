@@ -26,6 +26,7 @@ export class SeccionPacientesXEspecialistaComponent
   listadoPacientesSinRepetir: any[] = [];
   pacienteSeleccionado: any | null = null;
   turnosFiltradosPorPaciente: any[] = [];
+  mostrarFab: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -68,6 +69,10 @@ export class SeccionPacientesXEspecialistaComponent
       turno.pacienteId === paciente.id
     );
     console.log(this.turnosFiltradosPorPaciente);
+  }
+
+  mostrarUsuarios() {
+    this.mostrarFab = !this.mostrarFab;
   }
 
   ngOnDestroy(): void {

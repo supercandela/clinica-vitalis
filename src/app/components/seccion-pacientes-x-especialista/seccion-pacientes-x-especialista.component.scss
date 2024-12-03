@@ -21,24 +21,56 @@ $white: #fff;
     }
 
     .fab-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 2em;
-        justify-content: center;
-      }
-      
-      .fab-item {
+        position: relative;
+    }
+
+    .fab-main {
+        background-color: $moradoInstitucional;
+        border: none;
+        border-radius: 50%;
+        width: 8em;
+        height: 8em;
         display: flex;
         justify-content: center;
         align-items: center;
-      }
-      
-      .fab-button {
+        margin-left: 20%;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s;
+    }
+
+    .fab-main:hover {
+        transform: scale(1.1);
+    }
+
+    .fab-main-icon {
+        font-size: 6em;
+        color: $rosaInstitucional;
+        margin: 0;
+        padding: 0;
+        margin-top: -0.2em;
+    }
+
+    .fab-buttons-horizontal {
+        position: absolute;
+        left: 40em;
+        bottom: 0;
+        display: flex;
+        gap: 2em;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .fab-item {
+        display: flex;
+        align-items: center;
+    }
+
+    .fab-button {
         background-color: #ff4081;
         border: none;
         border-radius: 50%;
-        width: 10em;
-        height: 10em;
+        width: 8em;
+        height: 8em;
         padding: 0;
         display: flex;
         justify-content: center;
@@ -46,23 +78,23 @@ $white: #fff;
         cursor: pointer;
         position: relative;
         transition: transform 0.3s;
-      }
-      
-      .fab-button:hover {
+    }
+
+    .fab-button:hover {
         transform: scale(1.1);
-      }
-      
-      .fab-avatar {
+    }
+
+    .fab-avatar {
         width: 100%;
         height: 100%;
         border-radius: 50%;
-      }
-      
-      .fab-name {
+    }
+
+    .fab-name {
         display: none;
-      }
-      
-      .fab-button:hover .fab-name {
+    }
+
+    .fab-button:hover .fab-name {
         position: absolute;
         bottom: -25px;
         background-color: rgba(0, 0, 0, 0.7);
@@ -71,11 +103,11 @@ $white: #fff;
         border-radius: 5px;
         font-size: 12px;
         display: block;
-      }
-      
+    }
+
     //   HISTORIA CLINICA
 
-      .user-card {
+    .user-card {
         max-width: 850px;
         margin: 20px auto;
         border-radius: 8px;
@@ -159,7 +191,7 @@ $white: #fff;
                 .list-group-item {
                     display: flex;
                     justify-content: center;
-                  }
+                }
             }
 
             .card-footer {
@@ -169,5 +201,4 @@ $white: #fff;
             }
         }
     }
-
 }
