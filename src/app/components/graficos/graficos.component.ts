@@ -26,13 +26,15 @@ export class GraficosComponent implements OnInit, OnDestroy {
   subLogsListado?: Subscription;
   logsListado: any[] = [];
 
-
-  turnos: any[] = [];
+  turnosPorEspecialidad: boolean = false;
+  turnosPorEspecialidadListado: any[] = [];
+  subTurnosPorEspecialidad?: Subscription;
   espeCan: { especialidad: string; cantidad: number }[] = [];
   labelData: string[] = [];
   realData: number[] = [];
   colorData: any[] = [];
-  sub?: Subscription;
+
+  
 
   constructor (
     private authService: AuthService,
@@ -42,16 +44,12 @@ export class GraficosComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // this.sub = this.turnosService.obtenerTodosLosTurnos().subscribe((respuesta: any) => {
-    //   this.turnos = respuesta;
-    //   // this.conseguirCantidades();
-    // });
 
   }
 
   seleccionarLogs () {
     this.seleccionLogs = true;
-    console.log("llamada")
+    this.turnosPorEspecialidad = false;
     this.isLoading = true;
     this.subLogsListado = this.authService.obtenerLogsUsuarios().subscribe((respuesta) =>{
       this.logsListado = respuesta;
@@ -62,7 +60,6 @@ export class GraficosComponent implements OnInit, OnDestroy {
 
   exportAsExcel(): void {
     const tabla = document.getElementById('tabla-logs-completa');
-    
     if (tabla) {
       const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(tabla);
       const wb: XLSX.WorkBook = XLSX.utils.book_new();
@@ -71,48 +68,60 @@ export class GraficosComponent implements OnInit, OnDestroy {
     }
   }
 
-  // conseguirCantidades() {
-  //   this.espeCan = this.turnos.reduce<{ especialidad: string; cantidad: number }[]>((acc, turno) => {
-  //     const especialidadExistente = acc.find(item => item.especialidad === turno.especialidad);
-  //     if (especialidadExistente) {
-  //       especialidadExistente.cantidad++;
-  //     } else {
-  //       acc.push({ especialidad: turno.especialidad, cantidad: 1 });
-  //     }
-  //     return acc;
-  //   }, []);
+  seleccionarTurnosPorEspecialidad () {
+    this.seleccionLogs = false;
+    this.turnosPorEspecialidad = true;
+    this.isLoading = true;
+    this.subTurnosPorEspecialidad = this.turnosService.obtenerTodosLosTurnos().subscribe((respuesta: any) => {
+      this.turnosPorEspecialidadListado = respuesta;
+      this.conseguirCantidades();
+      this.isLoading = false;
+    });
+  }
 
-  //   if (this.espeCan !== null) {
-  //     this.espeCan.map(o => {
-  //       this.labelData.push(o.especialidad);
-  //       this.realData.push(o.cantidad);
-  //     })
-  //   }
-  //   this.cargarDatos(this.labelData, this.realData);
-  // }
+  conseguirCantidades() {
+    this.espeCan = this.turnosPorEspecialidadListado.reduce<{ especialidad: string; cantidad: number }[]>((acc, turno) => {
+      const especialidadExistente = acc.find(item => item.especialidad === turno.especialidad);
+      if (especialidadExistente) {
+        especialidadExistente.cantidad++;
+      } else {
+        acc.push({ especialidad: turno.especialidad, cantidad: 1 });
+      }
+      return acc;
+    }, []);
 
-  // cargarDatos(labelData: any, valuedata: any) {
-  //   const mychar = new Chart('barchart', {
-  //     type: 'bar',
-  //     data: {
-  //       labels: labelData,
-  //       datasets: [
-  //         {
-  //           label: 'Especialidad',
-  //           data: valuedata,
-  //           backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
-  //           borderColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
-  //           borderWidth: 1
-  //         }
-  //       ]
-  //     },
-  //     options: {
+    if (this.espeCan !== null) {
+      this.espeCan.map(o => {
+        this.labelData.push(o.especialidad);
+        this.realData.push(o.cantidad);
+      })
+    }
+    this.cargarDatos(this.labelData, this.realData);
+  }
 
-  //     }
-  //   })
-  // }
+  cargarDatos(labelData: any, valuedata: any) {
+    const mychar = new Chart('barchart', {
+      type: 'bar',
+      data: {
+        labels: labelData,
+        datasets: [
+          {
+            label: 'Especialidad',
+            data: valuedata,
+            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
+            borderColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+
+      }
+    })
+  }
 
   ngOnDestroy(): void {
-    this.sub?.unsubscribe();
+    this.subLogsListado?.unsubscribe();
+    this.subTurnosPorEspecialidad?.unsubscribe();
   }
 }
