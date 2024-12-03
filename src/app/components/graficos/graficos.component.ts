@@ -34,7 +34,11 @@ export class GraficosComponent implements OnInit, OnDestroy {
   realData: number[] = [];
   colorData: any[] = [];
 
-  
+  turnosPorDia: boolean = false;
+  turnosPorDiaListado: any[] = [];
+  subTurnosPorDia?: Subscription;
+  diaCan: { dia: string; cantidad: number }[] = [];
+  realDataPorDia: any[] = [];
 
   constructor (
     private authService: AuthService,
@@ -50,12 +54,12 @@ export class GraficosComponent implements OnInit, OnDestroy {
   seleccionarLogs () {
     this.seleccionLogs = true;
     this.turnosPorEspecialidad = false;
+    this.turnosPorDia = false;
     this.isLoading = true;
     this.subLogsListado = this.authService.obtenerLogsUsuarios().subscribe((respuesta) =>{
       this.logsListado = respuesta;
       this.isLoading = false;
     });
-
   }
 
   exportAsExcel(): void {
@@ -71,6 +75,7 @@ export class GraficosComponent implements OnInit, OnDestroy {
   seleccionarTurnosPorEspecialidad () {
     this.seleccionLogs = false;
     this.turnosPorEspecialidad = true;
+    this.turnosPorDia = false;
     this.isLoading = true;
     this.subTurnosPorEspecialidad = this.turnosService.obtenerTodosLosTurnos().subscribe((respuesta: any) => {
       this.turnosPorEspecialidadListado = respuesta;
@@ -96,6 +101,7 @@ export class GraficosComponent implements OnInit, OnDestroy {
         this.realData.push(o.cantidad);
       })
     }
+    console.log(this.labelData, this.realData);
     this.cargarDatos(this.labelData, this.realData);
   }
 
@@ -120,8 +126,55 @@ export class GraficosComponent implements OnInit, OnDestroy {
     })
   }
 
+  seleccionarTurnosPorDia () {
+    this.seleccionLogs = false;
+    this.turnosPorEspecialidad = false;
+    this.turnosPorDia = true;
+    this.isLoading = true;
+    this.subTurnosPorDia = this.turnosService.obtenerTodosLosTurnos().subscribe((respuesta: any) => {
+      this.turnosPorDiaListado = respuesta;
+      this.conseguirCantidadesPorDia();
+      this.isLoading = false;
+    });
+  }
+
+  conseguirCantidadesPorDia() {
+    this.diaCan = this.turnosPorDiaListado.reduce((contador, turno) => {
+      const fechaTurno = new Date(turno.fecha.seconds * 1000).toISOString().split('T')[0];
+      contador[fechaTurno] = (contador[fechaTurno] || 0) + 1;
+      return contador;
+    }, {} as { [fecha: string]: number });
+
+    this.labelData = Object.keys(this.diaCan);
+    this.realDataPorDia = Object.values(this.diaCan);
+    console.log(this.labelData, this.realDataPorDia);
+    this.cargarDatosPieChart(this.labelData, this.realData, 'piechart', 'doughnut');
+  }
+
+  cargarDatosPieChart(labelData: any, valuedata: any, chartId: string, chartType: any) {
+    const mychar = new Chart(chartId, {
+      type: chartType,
+      data: {
+        labels: labelData,
+        datasets: [
+          {
+            label: 'Días',
+            data: valuedata,
+            backgroundColor: ['#c0392b', '#9b59b6', '#2980b9', '#1abc9c', '#d4ac0d', '#2e4053'],
+            borderColor: ['#c0392b', '#9b59b6', '#2980b9', '#1abc9c', '#d4ac0d', '#2e4053'],
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+
+      }
+    })
+  }
+
   ngOnDestroy(): void {
     this.subLogsListado?.unsubscribe();
     this.subTurnosPorEspecialidad?.unsubscribe();
+    this.subTurnosPorDia?.unsubscribe();
   }
 }

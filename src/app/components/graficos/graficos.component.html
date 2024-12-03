@@ -8,11 +8,10 @@
   <div class="botones">
     <button class="estadisticas" (click)="seleccionarLogs()">Logs de ingresos al sistema</button>
     <button class="estadisticas" (click)="seleccionarTurnosPorEspecialidad()">Turnos por especialidad</button>
+    <button class="estadisticas" (click)="seleccionarTurnosPorDia()">Turnos por día</button>
+
     <button class="estadisticas">Turnos por médico - Solicitados</button>
-    
     <button class="estadisticas">Turnos por médico - Finalizados</button>
-    <button class="estadisticas">Turnos por médico - Finalizados</button>
-    <button class="estadisticas">Turnos por día - Gráfico de Torta</button>
   </div>
 </section>
 
@@ -51,4 +50,12 @@
     <canvas id="barchart"></canvas>
   </div>
 
+</section>
+
+<section class="listado" *ngIf="turnosPorDia">
+  <h2>Turnos por día</h2>
+  <button class="btn boton-descargar" (click)="exportAsExcel()">Descargar como PDF</button>
+  <div class="chart-container" id="contenido-pie-chart">
+    <canvas id="piechart"></canvas>
+  </div>
 </section>
