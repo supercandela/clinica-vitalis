@@ -14,6 +14,7 @@ import { MisTurnosPacienteComponent } from './components/mis-turnos-paciente/mis
 import { MisTurnosEspecialistaComponent } from './components/mis-turnos-especialista/mis-turnos-especialista.component';
 import { TurnosAdminComponent } from './components/turnos-admin/turnos-admin.component';
 import { GraficosComponent } from './components/graficos/graficos.component';
+import { SeccionPacientesXEspecialistaComponent } from './components/seccion-pacientes-x-especialista/seccion-pacientes-x-especialista.component';
 
 export const routes: Routes = [
   {
@@ -87,6 +88,12 @@ export const routes: Routes = [
   {
     path: 'mis-turnos-especialista',
     component: MisTurnosEspecialistaComponent,
+    canActivate: [authGuard],
+    data: { role: 'especialista' },
+  },
+  {
+    path: 'seccion-pacientes-x-especialista',
+    component: SeccionPacientesXEspecialistaComponent,
     canActivate: [authGuard],
     data: { role: 'especialista' },
   },
