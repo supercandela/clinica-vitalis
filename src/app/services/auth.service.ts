@@ -153,4 +153,10 @@ export class AuthService {
         console.error('Error al registrar el ingreso:', error);
       });
   }
+
+  obtenerLogsUsuarios() {
+    return this.firestore
+      .collection('logsIngresosUsuarios', (ref) => ref.orderBy('fecha', 'desc'))
+      .valueChanges();
+  }
 }

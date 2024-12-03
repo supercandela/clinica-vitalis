@@ -3,10 +3,60 @@
 <section class="listado">
     <h2>Estadísticas</h2>
 
-    <div class="chart-container">
+    <div class="botones">
+      <button class="estadisticas" (click)="seleccionarLogs()">Logs de ingresos al sistema</button>
+    
+      <button class="estadisticas">Turnos por especialidad</button>
+    
+      <button class="estadisticas">Turnos por día - Gráfico de Torta</button>
+    
+      <button class="estadisticas">Turnos por médico - Solicitados</button>
+    
+      <button class="estadisticas">Turnos por médico - Finalizados</button>
+    
+      <button class="estadisticas">Turnos por médico - Finalizados</button>
+    </div>
+
+
+    <!-- <div class="chart-container">
         <canvas id="barchart"></canvas>
-      </div>
+      </div> -->
 
 
 </section>
+
+<div class="spinner-container" [appSpinner]="isLoading"></div>
+
+<section class="listado" *ngIf="seleccionLogs">
+
+    <h2>Logs de ingresos al sistemas</h2>
+
+    <button class="btn boton-descargar" (click)="exportAsExcel('listado_usuarios')">Exportar a Excel</button>
+
+    <div class="tabla-logs" id="tabla-logs-completa">
+        <table>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>Tipo</th>
+                    <th>Apellido</th>
+                    <th>Nombre</th>
+                    <th>Fecha</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let log of logsListado">
+                    <td>{{ log.idUsuario }}</td>
+                    <td>{{ log.tipo }}</td>
+                    <td>{{ log.apellido }}</td>
+                    <td>{{ log.nombre }}</td>
+                    <td>{{ log.fecha.toDate() | date: 'dd/MM/yyyy' }}</td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</section>
+
 
