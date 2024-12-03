@@ -9,8 +9,8 @@
     <button class="estadisticas" (click)="seleccionarLogs()">Logs de ingresos al sistema</button>
     <button class="estadisticas" (click)="seleccionarTurnosPorEspecialidad()">Turnos por especialidad</button>
     <button class="estadisticas" (click)="seleccionarTurnosPorDia()">Turnos por día</button>
+    <button class="estadisticas" (click)="seleccionarTurnosSolicitadosPorMedico()">Turnos por médico - Solicitados</button>
 
-    <button class="estadisticas">Turnos por médico - Solicitados</button>
     <button class="estadisticas">Turnos por médico - Finalizados</button>
   </div>
 </section>
@@ -57,5 +57,28 @@
   <button class="btn boton-descargar" (click)="exportAsExcel()">Descargar como PDF</button>
   <div class="chart-container" id="contenido-pie-chart">
     <canvas id="piechart"></canvas>
+  </div>
+</section>
+
+<section class="listado" *ngIf="turnosSolicitadosPorMedico">
+  <h2>Turnos solicitados por especialista - por lapso de tiempo</h2>
+  <button class="btn boton-descargar" (click)="exportAsExcel()">Descargar como PDF</button>
+  <div class="chart-container" id="contenido-pie-chart">
+    <div class="container-botones">
+      <label class="in" for="desde">Fecha desde: </label>
+      <input class="in" type="date" id="desde" [(ngModel)]="fecha_desde" (click)="limpiarMensaje()">
+      <label class="in" for="hasta">Fecha hasta: </label>
+      <input class="in" type="date" id="hasta" [(ngModel)]="fecha_hasta" (click)="limpiarMensaje()">
+      <button type="button" class="btn btn-info" (click)="filtrarTurnos()">Generar</button>
+      <button style="margin-left: 10px;" type="button" class="btn btn-warning" (click)="exportAsExcel()">Descargar
+          PDF</button>
+
+  </div>
+  <div class="mensaje" *ngIf="mensaje" style="color: red;">
+      {{ mensaje }}
+  </div>
+  <div class="container-grafico" id="contenido">
+      <canvas id="turnosPorMedico"></canvas>
+  </div>
   </div>
 </section>
