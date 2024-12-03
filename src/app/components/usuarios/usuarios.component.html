@@ -51,3 +51,78 @@
     </div>
 
 </section>
+
+<!-- SECCION PACIENTES -->
+
+<section class="listado">
+    <h2>Sección pacientes</h2>
+
+    <div class="fab-container">
+        <button class="fab-main" (click)="mostrarUsuarios()">
+            <span class="fab-main-icon">+</span>
+        </button>
+        <div class="fab-buttons-horizontal" *ngIf="mostrarFab">
+            <div *ngFor="let paciente of listadoPacientesSinRepetir" class="fab-item">
+                <button class="fab-button" (click)="mostrarDetallesPaciente(paciente)">
+                    <img [src]="paciente.imagenUno" alt="Imagen de {{ paciente.nombre }}" class="fab-avatar" />
+                    <span class="fab-name">{{paciente.apellido}}, {{ paciente.nombre }}</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="listado" *ngIf="this.pacienteSeleccionado">
+    <h2>Historia clínica</h2>
+
+    <div class="user-card">
+        <div class="card">
+            <div class="row g-0">
+                <div class="col-md-4 imagen-perfil">
+                    <img *ngIf="this.pacienteSeleccionado" [src]="this.pacienteSeleccionado.imagenUno"
+                        alt="Imagen de usuario" class="img-fluid rounded-circle">
+                </div>
+                <div class="col-md-8 data-perfil">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            {{ this.pacienteSeleccionado.nombre }} {{ this.pacienteSeleccionado.apellido }}
+                        </h5>
+                        <p class="card-text">
+                            {{ this.pacienteSeleccionado.tipo | uppercase }}
+                        </p>
+                        <ul class="user-info list-unstyled">
+                            <li><strong>DNI:</strong> {{ this.pacienteSeleccionado.dni }}</li>
+                            <li><strong>Edad:</strong> {{ this.pacienteSeleccionado.edad }}</li>
+                            <li><strong>Obra Social:</strong> {{ this.pacienteSeleccionado.obraSocial }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="turnos">
+        <div class="card text-center" *ngFor="let turno of turnosFiltradosPorPaciente">
+            <div class="card-header">{{ turno.especialidad }}</div>
+            <div class="card-footer text-muted"><strong>Estado: </strong> {{ turno.estado }}</div>
+            <div class="card-body">
+                <h5 class="card-title">
+                    <strong>Fecha:</strong>
+                    {{ turno.fecha.toDate() | date: 'dd/MM/yyyy' }} - {{turno.hora}}hs.
+                </h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    <li class="list-group-item" *ngFor="let entry of turno.historiaClinica | keyvalue">
+                        <p class="card-text">
+                            <strong>{{ entry.key | capitalizarPrimeraLetra }}: </strong>
+                            {{ entry.value | booleanATexto }}
+                        </p>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card-footer text-muted"><strong>Reseña: </strong> {{ turno.resena }}</div>
+        </div>
+    </div>
+</section>
