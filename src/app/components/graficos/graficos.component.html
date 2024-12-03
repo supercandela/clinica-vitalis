@@ -31,7 +31,7 @@
 
     <h2>Logs de ingresos al sistemas</h2>
 
-    <button class="btn boton-descargar" (click)="exportAsExcel('listado_usuarios')">Exportar a Excel</button>
+    <button class="btn boton-descargar" (click)="exportAsExcel()">Exportar a Excel</button>
 
     <div class="tabla-logs" id="tabla-logs-completa">
         <table>
@@ -50,7 +50,7 @@
                     <td>{{ log.tipo }}</td>
                     <td>{{ log.apellido }}</td>
                     <td>{{ log.nombre }}</td>
-                    <td>{{ log.fecha.toDate() | date: 'dd/MM/yyyy' }}</td>
+                    <td>{{ log.fecha.toDate() | date: 'dd/MM/yyyy HH:MM' }}</td>
 
                 </tr>
             </tbody>
